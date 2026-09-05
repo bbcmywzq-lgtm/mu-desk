@@ -1,0 +1,32 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <LinearGradientBrush x:Key="ZoneBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#F21C2430" />
+        <GradientStop Offset="1" Color="#ED151B25" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ZoneBorderBrush" Color="#30FFFFFF" />
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#FFF7F9FC" />
+    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#FFA5B0BF" />
+    <SolidColorBrush x:Key="AccentBrush" Color="#FF8B7CFF" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="#FFA79CFF" />
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="#FF6F5CE7" />
+    <SolidColorBrush x:Key="AccentEdgeBrush" Color="#FFC4BCFF" />
+    <SolidColorBrush x:Key="ItemHoverBrush" Color="#13FFFFFF" />
+    <SolidColorBrush x:Key="ItemSelectedBrush" Color="#288B7CFF" />
+    <LinearGradientBrush x:Key="GlassTintBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#5C263446" />
+        <GradientStop Offset="0.48" Color="#6A172231" />
+        <GradientStop Offset="1" Color="#82101620" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="CollapsedGlassTintBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="#D5212632" />
+        <GradientStop Offset="0.72" Color="#D9191C26" />
+        <GradientStop Offset="1" Color="#E11A1725" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlassEdgeBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#8CFFFFFF" />
+        <GradientStop Offset="0.32" Color="#3DFFFFFF" />
+        <GradientStop Offset="0.7" Color="#16FFFFFF" />
+        <GradientStop Offset="1" Color="#52C4BCFF" />
+    </LinearGradientBrush>
+</ResourceDictionary>

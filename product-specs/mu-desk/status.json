@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "implementation_authorized": true,
+  "drop_refinement": {
+    "state": "accepted",
+    "implementation_state": "integrated",
+    "evidence": "用户确认右侧 Drop 沿用 Cue 刘海的视觉、展开收回和拖放优化思路，回复：对",
+    "implementation_map": "modules/file-shelf/drop-refresh.md"
+  },
+  "module_naming_amendment": {
+    "state": "accepted",
+    "date": "2026-09-05",
+    "evidence": "用户在八项命名方案后回复：可以，整体修改一下",
+    "implementation_map": "module-naming-implementation-map.json",
+    "scope": "仅展示命名；既有视觉、系统包装、内部标识和数据保持不变",
+    "implementation_state": "integrated",
+    "validation": "module-naming-validation.md"
+  },
+  "gates": {
+    "product_definition": {
+      "state": "accepted",
+      "accepted_at": "2026-09-05T01:52:55.9651588+08:00",
+      "evidence": [
+        "既有 Gate A 接受记录继续覆盖已经集成的模块",
+        "2026-08-22 用户选择‘临时货架’方向并要求开始制作",
+        "2026-08-22 用户明确回复‘接受 Gate A’",
+        "modules/file-shelf/definition.md"
+        ,"2026-08-24 用户在随记托管与桌面伙伴整合方案后明确回复‘修改’"
+      ],
+      "notes": [
+        "临时货架完整首版定义已接受",
+        "模块目录按当前实机校正：原错题收集条目已被现有 CISP 题库及其错题本取代",
+        "此前已集成模块和实现不回滚",
+        "2026-09-05 用户在完整定义后要求直接开始开发，接受 Mujun Cue Gate A。"
+      ]
+    },
+    "visual_system": {
+      "state": "accepted",
+      "accepted_at": "2026-09-05T01:52:55.9651588+08:00",
+      "evidence": [
+        "既有模块视觉决定保持有效",
+        "2026-08-22 用户在 Gate B 提示后明确回复‘b’",
+        "modules/file-shelf/visual-system.md",
+        "asset-plan.json"
+        ,"2026-08-24 桌面伙伴沿用已批准角色图标与 transparent-companion，不引入视觉 override"
+      ],
+      "notes": [
+        "临时货架继承 light-outlined 与 dark-translucent，无 token override，不使用角色插图",
+        "正式模块图标等待 Gate B 接受后生产"
+      ]
+    },
+    "system_packaging": {
+      "state": "accepted",
+      "accepted_at": "2026-09-05T01:52:55.9651588+08:00",
+      "evidence": [
+        "既有模块系统包装决定保持有效",
+        "2026-08-22 用户在 Gate C 提示后明确回复‘c’",
+        "modules/file-shelf/system-packaging.md"
+        ,"2026-08-24 用户授权由 MU Desk 统一随记与桌面伙伴的托盘、启动和进程生命周期"
+      ],
+      "notes": [
+        "临时货架继承 MU Desk 单一进程、托盘、启动项、设置、版本和安装身份",
+        "模块默认启用但只显示折叠标签；路径元数据本地持久化且不进入日志"
+      ]
+    },
+    "implementation_authorization": {
+      "state": "accepted",
+      "accepted_at": "2026-09-05T01:52:55.9651588+08:00",
+      "evidence": [
+        "既有实现授权保持历史有效",
+        "2026-08-22 用户明确回复‘D’",
+        "implementation-map.json",
+        "modules/effect-capture/implementation-map.snapshot.json",
+        "2026-08-22 用户在六模块视觉一致性报告后明确回复‘改吧’",
+        "visual-consistency-implementation-map.json"
+        ,"integration-reminder-pet-implementation-map.json"
+        ,"2026-08-24 用户在具体四项整合方案后明确回复‘修改’"
+        ,"2026-08-22 用户纠正独立任务窗口应显示各自模块图标"
+      ],
+      "notes": [
+        "当前根实施映射已切换为临时货架；动态拾取的历史映射保存为模块快照",
+        "授权范围仅限实施映射中的临时货架、必要宿主连接点、正式模块图标和验证",
+        "2026-08-22 临时货架已实现、测试、发布并完成首页与贴边空状态实机检查",
+        "本次新增授权仅用于落实既有 MU 视觉标准，不改变产品定义、系统包装或模块行为"
+        ,"独立任务窗口身份与模块图标修正已实现、测试、发布并完成 CISP 标题栏实机检查"
+        ,"用户实机否决首版 CISP 小尺寸比例并指出首页图标比例不一后，六模块图标已按轮盘/桌面整理基准完成光学归一化并复查"
+      ]
+    }
+  }
+}

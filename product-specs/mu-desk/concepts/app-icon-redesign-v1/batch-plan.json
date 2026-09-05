@@ -1,0 +1,68 @@
+{
+  "batch_id": "mu-desk-app-icon-redesign-v1",
+  "prompt_summary": "Nine small-size-first MU Desk shell icon concepts across Module Dock, Utility Stack, and Modular Block directions",
+  "items": [
+    {
+      "id": "module-dock-violet",
+      "name": "A1 Module Dock · Violet",
+      "origin": "requested",
+      "description": "A bold violet rounded-square body with three broad off-white modular tabs seated in one charcoal dock",
+      "contexts": ["windows-taskbar", "application-icon", "tray", "alt-tab"],
+      "forbidden_placements": ["module navigation"]
+    },
+    {
+      "id": "module-dock-charcoal",
+      "name": "A2 Module Dock · Charcoal",
+      "origin": "variant",
+      "variant_of": "module-dock-violet",
+      "description": "A charcoal rounded-square body with a thick violet U-shaped dock holding three broad off-white tabs"
+    },
+    {
+      "id": "module-dock-open",
+      "name": "A3 Module Dock · Open",
+      "origin": "variant",
+      "variant_of": "module-dock-violet",
+      "description": "A freestanding thick violet U-shaped dock holding three large charcoal and off-white module slabs, no enclosing window"
+    },
+    {
+      "id": "utility-stack-front",
+      "name": "B1 Utility Stack · Front",
+      "origin": "requested",
+      "description": "Three chunky offset rounded cards forming one compact diagonal stack, violet front card and off-white rear cards"
+    },
+    {
+      "id": "utility-stack-fan",
+      "name": "B2 Utility Stack · Fan",
+      "origin": "variant",
+      "variant_of": "utility-stack-front",
+      "description": "Three broad rounded utility cards fanned into one compact square silhouette, one violet and two charcoal/off-white"
+    },
+    {
+      "id": "utility-stack-inset",
+      "name": "B3 Utility Stack · Inset",
+      "origin": "variant",
+      "variant_of": "utility-stack-front",
+      "description": "A compact stack of two filled rounded tiles with one large inset module notch, violet dominant mass"
+    },
+    {
+      "id": "modular-block-lock",
+      "name": "C1 Modular Block · Lock",
+      "origin": "requested",
+      "description": "Three thick interlocking rounded blocks forming one near-square emblem, violet dominant block"
+    },
+    {
+      "id": "modular-block-pinwheel",
+      "name": "C2 Modular Block · Pinwheel",
+      "origin": "variant",
+      "variant_of": "modular-block-lock",
+      "description": "Three broad rounded blocks turning around one small negative-space center, compact pinwheel silhouette"
+    },
+    {
+      "id": "modular-block-knot",
+      "name": "C3 Modular Block · Knot",
+      "origin": "variant",
+      "variant_of": "modular-block-lock",
+      "description": "Three joined rounded slabs forming a single modular knot with one strong violet face"
+    }
+  ]
+}

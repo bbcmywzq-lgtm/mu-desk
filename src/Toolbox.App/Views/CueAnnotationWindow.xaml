@@ -1,0 +1,11 @@
+<Window x:Class="PersonalToolbox.Views.CueAnnotationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Mujun Cue · 标注画布" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False" ShowActivated="False" Topmost="True" ResizeMode="NoResize" PreviewKeyDown="Window_OnKeyDown">
+    <Grid x:Name="CanvasRoot" Background="#01000000" ClipToBounds="True">
+        <Image x:Name="FrozenImage" Stretch="Fill" IsHitTestVisible="False" Visibility="Collapsed"/>
+        <Grid x:Name="SurfaceHost"/>
+        <Canvas x:Name="EditorLayer" Background="{x:Null}"/>
+    </Grid>
+</Window>

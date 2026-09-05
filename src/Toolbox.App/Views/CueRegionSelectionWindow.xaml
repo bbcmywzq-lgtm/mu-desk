@@ -1,0 +1,17 @@
+<Window x:Class="PersonalToolbox.Views.CueRegionSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize" Cursor="Cross"
+        KeyDown="Window_OnKeyDown">
+    <Canvas x:Name="RootCanvas" Background="#7012141B"
+            MouseLeftButtonDown="Canvas_OnMouseLeftButtonDown"
+            MouseMove="Canvas_OnMouseMove" MouseLeftButtonUp="Canvas_OnMouseLeftButtonUp">
+        <Border x:Name="Selection" Visibility="Collapsed" BorderBrush="#C8ADFF" BorderThickness="2"
+                Background="#01FFFFFF" CornerRadius="3" />
+        <Border x:Name="Hint" Canvas.Left="24" Canvas.Top="24" Padding="14,9" CornerRadius="9"
+                Background="#EB171923" BorderBrush="#66FFFFFF" BorderThickness="1">
+            <TextBlock Foreground="White" Text="拖动框选截图区域 · Esc 取消" />
+        </Border>
+    </Canvas>
+</Window>

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>MouseRing</AssemblyName>
+    <RootNamespace>MouseRing</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PlatformTarget>x64</PlatformTarget>
+    <SelfContained>false</SelfContained>
+    <Version>0.1.0</Version>
+    <AssemblyTitle>Mujun Orbit</AssemblyTitle>
+    <Product>Mujun Orbit</Product>
+    <Description>一个克制的 Windows 四向鼠标轮盘</Description>
+    <Authors>MouseRing</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MouseRing.Core\MouseRing.Core.csproj" />
+    <ProjectReference Include="..\Toolbox.Core\Toolbox.Core.csproj" />
+  </ItemGroup>
+</Project>

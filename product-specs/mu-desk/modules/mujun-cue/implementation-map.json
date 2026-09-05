@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "scope": "Implement Mujun Cue Phase 1 inside MU Desk: Focus Hold, pointer guidance, spotlight, local magnifier, live/frozen annotation baseline, screenshots, unified toolbar/settings/tray/pause/recovery integration, and focused tests.",
+  "source_contracts": [
+    "modules/mujun-cue/definition.md",
+    "modules/mujun-cue/visual-system.md",
+    "modules/mujun-cue/system-packaging.md"
+  ],
+  "owned_projects": ["src/Toolbox.Core", "src/Toolbox.App", "src/Toolbox.Tests"],
+  "owned_areas": [
+    "Cue settings and normalization in Toolbox.Core",
+    "Cue module, hooks, magnification interop, overlay/toolbar/settings/annotation/screenshot surfaces in Toolbox.App",
+    "Minimum MU Desk homepage, tray, pause, shutdown and settings wiring",
+    "Code-native Cue module icon and focused settings/core tests"
+  ],
+  "preserve": [
+    "MU Desk remains the only shell, executable, tray, startup identity, settings owner and package.",
+    "All existing modules, data formats, entry points and compatibility launchers remain behaviorally unchanged.",
+    "No screen content is uploaded or logged and no administrator privilege is introduced.",
+    "Dynamic Capture remains a separate short-motion capture module."
+  ],
+  "sequence": [
+    "Add normalized Cue settings and backward-compatible ToolboxSettings migration.",
+    "Implement one module lifecycle with global keyboard hook, fullscreen magnification cleanup and emergency reset.",
+    "Implement per-monitor click-through pointer/spotlight overlays and on-demand local magnifier.",
+    "Implement the compact toolbar, annotation baseline and screenshot commands.",
+    "Wire homepage, tray, shared pause, shutdown and unified errors without changing existing module behavior.",
+    "Add focused tests, build, publish and run representative smoke checks; record limitations honestly."
+  ],
+  "risks": [
+    {
+      "risk": "Global keyboard interception could break Caps Lock or remain active after failure.",
+      "mitigation": "Use a single owned low-level hook, forward short taps, always unhook on pause/dispose, and expose four independent recovery paths."
+    },
+    {
+      "risk": "Windows fullscreen magnification differs across monitor/DPI/input configurations.",
+      "mitigation": "Clamp transforms, center on real cursor coordinates, restore 1x before every shutdown path, and keep a visible local-lens fallback."
+    },
+    {
+      "risk": "Capturing a live magnifier can recursively capture its own overlay.",
+      "mitigation": "Exclude overlay windows from capture where supported, keep refresh on demand, and fail visibly rather than showing stale success."
+    },
+    {
+      "risk": "The first phase is broad enough to destabilize existing modules.",
+      "mitigation": "Keep Cue code isolated behind one module coordinator and add only narrow host wiring plus regression builds/tests."
+    }
+  ],
+  "verification": [
+    "Core settings defaults, clamping and legacy JSON compatibility pass.",
+    "Caps Lock short tap is preserved; hold activates and release restores Focus Hold.",
+    "Emergency reset and MU Desk pause close overlays and restore 1x.",
+    "Pointer, spotlight, lens, annotation and screenshot each have one representative working path.",
+    "Build and all existing test executables pass without new warnings.",
+    "Published MU Desk remains one package and shows the Mujun Cue module card using the inherited visual system."
+  ]
+}

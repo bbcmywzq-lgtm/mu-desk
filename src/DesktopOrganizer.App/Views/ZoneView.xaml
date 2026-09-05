@@ -1,0 +1,716 @@
+<UserControl x:Class="DesktopOrganizer.Views.ZoneView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:DesktopOrganizer.Models"
+             xmlns:automation="clr-namespace:System.Windows.Automation;assembly=PresentationCore"
+             mc:Ignorable="d"
+             MinWidth="240"
+             MinHeight="44"
+             AllowDrop="True"
+             PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown"
+             PreviewMouseMove="OnPreviewMouseMove"
+             PreviewMouseDown="OnPreviewMouseDown"
+             DragEnter="OnDragEnter"
+             DragLeave="OnDragLeave"
+             DragOver="OnDragOver"
+             Drop="OnDrop"
+             d:DesignWidth="560"
+             d:DesignHeight="390">
+    <UserControl.Resources>
+        <Style x:Key="HeaderIconButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonSurface"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonSurface" Property="Background" Value="#16FFFFFF" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonSurface" Property="Background" Value="#28FFFFFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="Width" Value="9" />
+            <Setter Property="Margin" Value="0,4,4,4" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}"
+                                                  Background="Transparent"
+                                                  BorderThickness="0"
+                                                  Opacity="0" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb MinHeight="32">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border x:Name="ThumbSurface"
+                                                        Margin="2,0"
+                                                        Background="#45FFFFFF"
+                                                        CornerRadius="3" />
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ThumbSurface" Property="Background" Value="#70FFFFFF" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsDragging" Value="True">
+                                                        <Setter TargetName="ThumbSurface" Property="Background" Value="#958B7CFF" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}"
+                                                  Background="Transparent"
+                                                  BorderThickness="0"
+                                                  Opacity="0" />
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DesktopItemStyle" TargetType="ListBoxItem">
+            <Setter Property="Width" Value="92" />
+            <Setter Property="Height" Value="98" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Padding" Value="6" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="ItemSurface"
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ItemSurface" Property="Background" Value="{DynamicResource ItemHoverBrush}" />
+                                <Setter TargetName="ItemSurface" Property="BorderBrush" Value="#16FFFFFF" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemSurface" Property="Background" Value="{DynamicResource ItemSelectedBrush}" />
+                                <Setter TargetName="ItemSurface" Property="BorderBrush" Value="#808B7CFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SmartItemStyle" TargetType="ListBoxItem">
+            <Setter Property="Height" Value="56" />
+            <Setter Property="Margin" Value="0,1" />
+            <Setter Property="Padding" Value="9,5" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="ItemSurface"
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="9">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ItemSurface" Property="Background" Value="{DynamicResource ItemHoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemSurface" Property="Background" Value="{DynamicResource ItemSelectedBrush}" />
+                                <Setter TargetName="ItemSurface" Property="BorderBrush" Value="#808B7CFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ItemsPanelTemplate x:Key="DesktopItemsPanel">
+            <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+        </ItemsPanelTemplate>
+        <ItemsPanelTemplate x:Key="SmartItemsPanel">
+            <VirtualizingStackPanel IsItemsHost="True" />
+        </ItemsPanelTemplate>
+
+        <DataTemplate x:Key="DesktopItemTemplate" DataType="{x:Type models:DesktopEntry}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0"
+                       Width="40"
+                       Height="40"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Source="{Binding Icon}"
+                       Stretch="Uniform" />
+                <TextBlock Grid.Row="1"
+                           Margin="0,3,0,0"
+                           MaxHeight="32"
+                           Text="{Binding Name}"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           FontSize="11"
+                           LineHeight="15"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding Path}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SmartItemTemplate" DataType="{x:Type models:DesktopEntry}">
+            <Grid ToolTip="{Binding Path}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="42" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="108" />
+                    <ColumnDefinition Width="68" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0"
+                       Width="34"
+                       Height="34"
+                       HorizontalAlignment="Left"
+                       Source="{Binding Icon}"
+                       Stretch="Uniform" />
+                <StackPanel Grid.Column="1" Margin="4,0,10,0" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Name}"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               TextTrimming="CharacterEllipsis" />
+                    <TextBlock Margin="0,3,0,0"
+                               Text="{Binding RelativeDirectory}"
+                               Foreground="#8FAFC0D2"
+                               FontSize="10"
+                               TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+                <TextBlock Grid.Column="2"
+                           VerticalAlignment="Center"
+                           Text="{Binding ModifiedText}"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="10" />
+                <TextBlock Grid.Column="3"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Text="{Binding SizeText}"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="10" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid x:Name="RootSurface" Margin="10">
+        <Border x:Name="ShadowSurface" Background="#14000000" CornerRadius="20">
+            <Border.Effect>
+                <DropShadowEffect x:Name="ZoneShadowEffect"
+                                  BlurRadius="34"
+                                  Direction="270"
+                                  Opacity="0.42"
+                                  ShadowDepth="12"
+                                  Color="#FF000000" />
+            </Border.Effect>
+        </Border>
+
+        <Border x:Name="BackdropSurface" CornerRadius="20">
+            <Border.Background>
+                <ImageBrush x:Name="GlassBackdropBrush"
+                            Stretch="Fill"
+                            ViewboxUnits="Absolute" />
+            </Border.Background>
+            <Border.Effect>
+                <BlurEffect Radius="28" RenderingBias="Quality" />
+            </Border.Effect>
+        </Border>
+
+        <Border x:Name="ZoneBorder"
+                Background="{DynamicResource GlassTintBrush}"
+                BorderBrush="{DynamicResource ZoneBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="20"
+                SnapsToDevicePixels="True">
+            <Grid ClipToBounds="True">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="HeaderRow" Height="52" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border x:Name="ExpandedHeader"
+                    Grid.Row="0"
+                    BorderBrush="#16FFFFFF"
+                    BorderThickness="0,0,0,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition x:Name="FocusColumn" Width="40" />
+                        <ColumnDefinition x:Name="PinColumn" Width="40" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition x:Name="MoreColumn" Width="44" />
+                    </Grid.ColumnDefinitions>
+
+                    <Thumb x:Name="MoveThumb"
+                           Grid.Column="0"
+                           Cursor="SizeAll"
+                           DragDelta="OnMoveDragDelta"
+                           MouseDoubleClick="OnHeaderDoubleClick">
+                        <Thumb.Template>
+                            <ControlTemplate TargetType="Thumb">
+                                <Grid Background="Transparent">
+                                    <StackPanel Margin="16,0,8,0"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal">
+                                        <Border Width="7"
+                                                Height="7"
+                                                Margin="0,0,9,0"
+                                                Background="{DynamicResource AccentBrush}"
+                                                CornerRadius="4" />
+                                        <TextBlock Text="{TemplateBinding Tag}"
+                                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                                   FontFamily="Segoe UI Variable Text"
+                                                   FontSize="14"
+                                                   FontWeight="SemiBold"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   VerticalAlignment="Center" />
+                                        <Border Margin="10,0,0,0"
+                                                Padding="7,3"
+                                                Background="#12FFFFFF"
+                                                BorderBrush="#12FFFFFF"
+                                                BorderThickness="1"
+                                                CornerRadius="8"
+                                                VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding (automation:AutomationProperties.HelpText), RelativeSource={RelativeSource TemplatedParent}}"
+                                                       Foreground="{DynamicResource SecondaryTextBrush}"
+                                                       FontFamily="Segoe UI Variable Text"
+                                                       FontSize="10"
+                                                       TextTrimming="CharacterEllipsis" />
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+
+                    <TextBox x:Name="RenameTextBox"
+                             Grid.Column="0"
+                             Height="32"
+                             Margin="32,10,10,10"
+                             Padding="9,4"
+                             VerticalContentAlignment="Center"
+                             Background="#2AFFFFFF"
+                             BorderBrush="#808B7CFF"
+                             BorderThickness="1"
+                             Foreground="White"
+                             FontFamily="Segoe UI Variable Text"
+                             FontSize="13"
+                             SelectionBrush="{DynamicResource AccentBrush}"
+                             Visibility="Collapsed"
+                             KeyDown="OnRenameKeyDown"
+                             LostKeyboardFocus="OnRenameLostKeyboardFocus" />
+
+                    <Button x:Name="FocusButton"
+                            Grid.Column="1"
+                            Margin="0"
+                            Style="{StaticResource HeaderIconButtonStyle}"
+                            ToolTip="进入视域"
+                            automation:AutomationProperties.Name="聚焦此分区"
+                            Click="OnFocusClick">
+                        <Grid Width="15" Height="15">
+                            <Path x:Name="FocusGlyph"
+                                  Data="M 1,5 L 1,1 L 5,1 M 10,1 L 14,1 L 14,5 M 14,10 L 14,14 L 10,14 M 5,14 L 1,14 L 1,10"
+                                  Stretch="Uniform"
+                                  Stroke="{DynamicResource SecondaryTextBrush}"
+                                  StrokeThickness="1.5"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round" />
+                        </Grid>
+                    </Button>
+
+                    <Button x:Name="PinButton"
+                            Grid.Column="2"
+                            Margin="0"
+                            Style="{StaticResource HeaderIconButtonStyle}"
+                            ToolTip="固定分区"
+                            automation:AutomationProperties.Name="固定分区"
+                            Click="OnPinClick">
+                        <Grid Width="15" Height="16">
+                            <Path x:Name="PinGlyph"
+                                  Data="M 5,1 L 11,1 L 10,3 L 10,7 L 12.5,9 L 12.5,10 L 8.8,10 L 8.8,15 L 8,17 L 7.2,15 L 7.2,10 L 3.5,10 L 3.5,9 L 6,7 L 6,3 Z"
+                                  Fill="{DynamicResource SecondaryTextBrush}"
+                                  Stretch="Uniform">
+                                <Path.RenderTransform>
+                                    <RotateTransform x:Name="PinRotation"
+                                                     Angle="-28"
+                                                     CenterX="7.5"
+                                                     CenterY="8" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </Button>
+
+                    <Button x:Name="CollapseButton"
+                            Grid.Column="3"
+                            Margin="0"
+                            Style="{StaticResource HeaderIconButtonStyle}"
+                            ToolTip="折叠或展开"
+                            automation:AutomationProperties.Name="折叠或展开"
+                            Click="OnCollapseClick">
+                        <Grid Width="14" Height="10">
+                            <Path Data="M 1,8 L 7,2 L 13,8"
+                                  Stroke="{DynamicResource SecondaryTextBrush}"
+                                  StrokeThickness="1.6"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round">
+                                <Path.RenderTransform>
+                                    <RotateTransform x:Name="ChevronRotation"
+                                                     Angle="0"
+                                                     CenterX="7"
+                                                     CenterY="5" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </Button>
+
+                    <Button x:Name="MoreButton"
+                            Grid.Column="4"
+                            Margin="0,0,8,0"
+                            Style="{StaticResource HeaderIconButtonStyle}"
+                            ToolTip="更多操作"
+                            automation:AutomationProperties.Name="更多操作"
+                            Click="OnMoreClick">
+                        <Button.ContextMenu>
+                            <ContextMenu Placement="Bottom">
+                                <MenuItem x:Name="RenameMenuItem"
+                                          Header="重命名"
+                                          Click="OnRenameMenuClick" />
+                                <MenuItem Header="显示模式">
+                                    <MenuItem x:Name="AutoDisplayModeMenuItem"
+                                              Header="跟随分区类型"
+                                              IsCheckable="True"
+                                              Click="OnAutoDisplayModeClick" />
+                                    <MenuItem x:Name="GridDisplayModeMenuItem"
+                                              Header="图标视图"
+                                              IsCheckable="True"
+                                              Click="OnGridDisplayModeClick" />
+                                    <MenuItem x:Name="ListDisplayModeMenuItem"
+                                              Header="列表视图"
+                                              IsCheckable="True"
+                                              Click="OnListDisplayModeClick" />
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem x:Name="EditSmartZoneMenuItem"
+                                          Header="编辑来源与筛选"
+                                          Visibility="Collapsed"
+                                          Click="OnEditSmartZoneMenuClick" />
+                                <MenuItem x:Name="OpenSourceFolderMenuItem"
+                                          Header="打开来源文件夹"
+                                          Visibility="Collapsed"
+                                          Click="OnOpenSourceFolderMenuClick" />
+                                <Separator x:Name="SmartZoneMenuSeparator" Visibility="Collapsed" />
+                                <MenuItem x:Name="DeleteMenuItem"
+                                          Header="删除分区"
+                                          Click="OnDeleteMenuClick" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                        <Grid Width="15" Height="12">
+                            <Ellipse Width="2.6" Height="2.6" Fill="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Left" />
+                            <Ellipse Width="2.6" Height="2.6" Fill="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center" />
+                            <Ellipse Width="2.6" Height="2.6" Fill="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Right" />
+                        </Grid>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Border x:Name="CollapsedHeader"
+                    Grid.Row="0"
+                    Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                    </Grid.ColumnDefinitions>
+                    <Thumb x:Name="CollapsedMoveThumb"
+                           Grid.Column="0"
+                           Cursor="SizeAll"
+                           DragDelta="OnMoveDragDelta"
+                           MouseDoubleClick="OnCollapsedHeaderDoubleClick">
+                        <Thumb.Template>
+                            <ControlTemplate TargetType="Thumb">
+                                <Grid Margin="14,0,4,0" Background="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6" />
+                                        <ColumnDefinition Width="9" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="6"
+                                            Height="6"
+                                            VerticalAlignment="Center"
+                                            Background="{DynamicResource AccentBrush}"
+                                            CornerRadius="3" />
+                                    <TextBlock Grid.Column="2"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource PrimaryTextBrush}"
+                                               FontFamily="Segoe UI Variable Text"
+                                               FontSize="13"
+                                               FontWeight="SemiBold"
+                                               Text="{TemplateBinding Tag}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="3"
+                                               Margin="8,0,0,0"
+                                               VerticalAlignment="Center"
+                                               Foreground="#809FA9B8"
+                                               FontFamily="Segoe UI Variable Text"
+                                               FontSize="10"
+                                               Text="{Binding (automation:AutomationProperties.HelpText), RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                    <Button x:Name="CollapsedExpandButton"
+                            Grid.Column="1"
+                            Margin="0,0,5,0"
+                            Style="{StaticResource HeaderIconButtonStyle}"
+                            ToolTip="展开分区"
+                            automation:AutomationProperties.Name="展开分区"
+                            Click="OnCollapseClick">
+                        <Path Width="13"
+                              Height="8"
+                              Data="M 1,1 L 6.5,6.5 L 12,1"
+                              Stretch="Uniform"
+                              Stroke="#BFC8C4D2"
+                              StrokeThickness="1.5"
+                              StrokeStartLineCap="Round"
+                              StrokeEndLineCap="Round" />
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Border x:Name="SmartMetaBar"
+                    Grid.Row="1"
+                    Height="34"
+                    Margin="10,7,10,0"
+                    Padding="6,0"
+                    VerticalAlignment="Top"
+                    Background="#0FFFFFFF"
+                    BorderBrush="#18FFFFFF"
+                    BorderThickness="1"
+                    CornerRadius="9"
+                    Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="56" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="34" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="SmartRootButton"
+                            Grid.Column="0"
+                            Width="52"
+                            Height="26"
+                            Style="{StaticResource HeaderIconButtonStyle}"
+                            ToolTip="一键返回主文件夹"
+                            automation:AutomationProperties.Name="返回主文件夹"
+                            Click="OnNavigateRootClick">
+                        <TextBlock Foreground="#C8D2D9E5" FontSize="10" Text="主目录" />
+                    </Button>
+                    <Button x:Name="SmartUpButton"
+                            Grid.Column="1"
+                            Width="26"
+                            Height="26"
+                            Style="{StaticResource HeaderIconButtonStyle}"
+                            ToolTip="返回上一级"
+                            automation:AutomationProperties.Name="返回上一级文件夹"
+                            Click="OnNavigateUpClick">
+                        <TextBlock Foreground="#C8D2D9E5" FontSize="15" Text="↑" />
+                    </Button>
+                    <TextBlock x:Name="SmartPathText"
+                               Grid.Column="2"
+                               Margin="4,0,0,0"
+                               VerticalAlignment="Center"
+                               Foreground="#B9D0DCEB"
+                               FontSize="10"
+                               TextTrimming="CharacterEllipsis" />
+                    <Border Grid.Column="3"
+                            Margin="10,0,0,0"
+                            Padding="7,3"
+                            VerticalAlignment="Center"
+                            Background="#218B7CFF"
+                            CornerRadius="7">
+                        <TextBlock x:Name="SmartFilterText"
+                                   Foreground="#D9CFE1F8"
+                                   FontSize="9" />
+                    </Border>
+                    <Button x:Name="SmartDisplayModeButton"
+                            Grid.Column="4"
+                            Width="28"
+                            Height="26"
+                            Margin="6,0,0,0"
+                            Style="{StaticResource HeaderIconButtonStyle}"
+                            ToolTip="切换到图标视图"
+                            automation:AutomationProperties.Name="切换显示模式"
+                            Click="OnDisplayModeToggleClick">
+                        <TextBlock x:Name="SmartDisplayModeGlyph"
+                                   Foreground="#C8D2D9E5"
+                                   FontFamily="Segoe UI Symbol"
+                                   FontSize="14"
+                                   Text="▦" />
+                    </Button>
+                </Grid>
+            </Border>
+
+            <ListBox x:Name="ItemsList"
+                     Grid.Row="1"
+                     Margin="10,8,6,10"
+                     Padding="0"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     ItemContainerStyle="{StaticResource DesktopItemStyle}"
+                     ItemTemplate="{StaticResource DesktopItemTemplate}"
+                     ItemsPanel="{StaticResource DesktopItemsPanel}"
+                     SelectionMode="Extended"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     PreviewMouseRightButtonDown="OnItemsListPreviewMouseRightButtonDown"
+                     KeyDown="OnItemsListKeyDown"
+                     MouseDoubleClick="OnItemDoubleClick">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="打开" Click="OnOpenItemClick" />
+                        <MenuItem Header="在资源管理器中显示" Click="OnRevealItemClick" />
+                        <Separator />
+                        <MenuItem Header="重命名文件" Click="OnRenameFileClick" />
+                        <MenuItem Header="移入回收站" Click="OnRecycleFilesClick" />
+                        <Separator x:Name="ReturnToInboxSeparator" />
+                        <MenuItem x:Name="ReturnToInboxMenuItem"
+                                  Header="移回收件箱"
+                                  Click="OnReturnToInboxItemClick" />
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+
+            <Grid x:Name="EmptyState"
+                  Grid.Row="1"
+                  Margin="24"
+                  IsHitTestVisible="False"
+                  Visibility="Collapsed">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border Width="42"
+                            Height="42"
+                            HorizontalAlignment="Center"
+                            Background="#12FFFFFF"
+                            BorderBrush="#28FFFFFF"
+                            BorderThickness="1"
+                            CornerRadius="13">
+                        <Grid Width="19" Height="19" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Margin="0,0,2,2" Background="#55FFFFFF" CornerRadius="2" />
+                            <Border Grid.Column="1" Margin="2,0,0,2" Background="#2CFFFFFF" CornerRadius="2" />
+                            <Border Grid.Row="1" Margin="0,2,2,0" Background="#2CFFFFFF" CornerRadius="2" />
+                            <Border Grid.Row="1" Grid.Column="1" Margin="2,2,0,0"
+                                    Background="{DynamicResource AccentBrush}" CornerRadius="2" />
+                        </Grid>
+                    </Border>
+                    <TextBlock x:Name="EmptyStateText"
+                               Margin="0,12,0,0"
+                               HorizontalAlignment="Center"
+                               Foreground="{DynamicResource SecondaryTextBrush}"
+                               FontSize="11"
+                               Text="把重要项目安放到这里" />
+                </StackPanel>
+            </Grid>
+
+            <Thumb x:Name="ResizeThumb"
+                   Grid.RowSpan="2"
+                   Width="24"
+                   Height="24"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,9,9"
+                   Cursor="SizeNWSE"
+                   DragDelta="OnResizeDragDelta">
+                <Thumb.Template>
+                    <ControlTemplate TargetType="Thumb">
+                        <Grid Background="Transparent">
+                            <Path Data="M 6,17 L 17,6 M 11,17 L 17,11"
+                                  Stroke="#5AFFFFFF"
+                                  StrokeThickness="1.4"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round" />
+                        </Grid>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+            </Grid>
+        </Border>
+
+        <Border IsHitTestVisible="False"
+                BorderBrush="{DynamicResource GlassEdgeBrush}"
+                BorderThickness="1"
+                CornerRadius="20" />
+
+        <Border IsHitTestVisible="False"
+                Margin="1"
+                CornerRadius="19"
+                Opacity="0.035">
+            <Border.Background>
+                <DrawingBrush TileMode="Tile"
+                              Viewport="0,0,4,4"
+                              ViewportUnits="Absolute">
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="M 0,0 L 1,0 1,1 0,1 Z" />
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Border.Background>
+        </Border>
+    </Grid>
+</UserControl>

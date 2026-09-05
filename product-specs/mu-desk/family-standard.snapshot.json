@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "standard_id": "MU-PRODUCT-STANDARD",
+  "standard_version": "1.0.1",
+  "family": {
+    "mark": "MU",
+    "expansion": "Modular Utility",
+    "naming_pattern": "MU <functional suffix>",
+    "creator_credit": "about-only"
+  },
+  "topology": {
+    "user_facing_shells_per_sku": 1,
+    "shared_ownership": ["tray", "startup", "settings", "version", "about"],
+    "standalone_modules": "development-or-compatibility-only"
+  },
+  "surface_profiles": ["light-outlined", "dark-translucent", "transparent-companion"],
+  "tokens": {
+    "canvas": "#EEF0F5",
+    "surface": "#FAFAFC",
+    "ink": "#25252A",
+    "muted_ink": "#73737D",
+    "violet": "#8055D9",
+    "pale_violet": "#E9DEFF",
+    "warm_status": "#FFD878",
+    "success": "#49C978",
+    "danger": "#D95C68"
+  },
+  "typography": {
+    "display": "Segoe UI Variable",
+    "cjk_fallback": "Microsoft YaHei UI"
+  },
+  "geometry": {
+    "card_radius_px": 14,
+    "control_radius_px": [8, 10],
+    "ui_outline_px": [1, 1.5]
+  },
+  "motion_ms": [120, 180],
+  "icon_packaging": {
+    "windows_required_sizes": [16, 20, 24, 32, 40, 48, 64, 128, 256, 512],
+    "small_size_optical_compensation": "required when generic padding renders visibly smaller than neighboring taskbar icons",
+    "live_taskbar_comparison": "dpi-aware comparison against at least three ordinary neighboring applications",
+    "coverage_override": "allowed only with recorded platform evidence and transparent unclipped corners"
+  }
+}

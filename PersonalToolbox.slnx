@@ -1,0 +1,16 @@
+<Solution>
+  <Project Path="src/Toolbox.Core/Toolbox.Core.csproj" />
+  <Project Path="src/DesktopOrganizer.Core/DesktopOrganizer.Core.csproj" />
+  <Project Path="src/DesktopOrganizer.App/DesktopOrganizer.App.csproj" />
+  <Project Path="src/DesktopOrganizer.Tests/DesktopOrganizer.Tests.csproj" />
+  <Project Path="src/MouseRing.Core/MouseRing.Core.csproj" />
+  <Project Path="src/MouseRing.App/MouseRing.App.csproj" />
+  <Project Path="src/MouseRing.Tests/MouseRing.Tests.csproj" />
+  <Project Path="src/Toolbox.App/Toolbox.App.csproj" />
+  <Project Path="src/PersonalTools.Core/PersonalTools.Core.csproj" />
+  <Project Path="src/PersonalTools.App/PersonalTools.App.csproj" />
+  <Project Path="src/PersonalTools.Tests/PersonalTools.Tests.csproj" />
+  <Project Path="src/EffectCapture.TestApp/EffectCapture.TestApp.csproj" />
+  <Project Path="src/Toolbox.Tests/Toolbox.Tests.csproj" />
+  <Project Path="src/CispTrainer.App/CispTrainer.App.csproj" />
+</Solution>

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "scope": "Implement only the accepted MU Desk File Shelf (file-shelf) module, its edge-docked WPF drag-and-drop surface, local path-metadata persistence, and the minimum existing host/settings/tray integration required by the accepted contracts.",
+  "source_contracts": [
+    "modules/file-shelf/definition.md",
+    "modules/file-shelf/visual-system.md",
+    "modules/file-shelf/system-packaging.md"
+  ],
+  "owned_projects": [
+    "src/Toolbox.Core",
+    "src/Toolbox.App",
+    "src/Toolbox.Tests"
+  ],
+  "owned_files": [
+    {
+      "path": "src/Toolbox.Core/FileShelfSettings.cs",
+      "change": "Add the pure settings contract for enabled state, left/right dock side, display device name, and clamped relative vertical position."
+    },
+    {
+      "path": "src/Toolbox.Core/FileShelfModels.cs",
+      "change": "Add versioned shelf, batch, item, removal snapshot, type, order, pin, and validation models with a hard 200-path limit and no file-content fields."
+    },
+    {
+      "path": "src/Toolbox.Core/FileShelfStore.cs",
+      "change": "Add atomic JSON load/save with temporary replacement, one last-known-good backup, recovery result reporting, rollback-safe mutation, and injectable paths for deterministic tests."
+    },
+    {
+      "path": "src/Toolbox.Core/ToolboxSettings.cs",
+      "change": "Add one FileShelf settings section and normalize missing legacy fields while preserving all existing defaults and serialized properties."
+    },
+    {
+      "path": "src/Toolbox.App/Modules/FileShelfModule.cs",
+      "change": "Add the single IToolModule coordinator owning enable, pause, show/collapse, item count, persistence, one-session undo, one-window lifetime, errors, and state events."
+    },
+    {
+      "path": "src/Toolbox.App/Views/FileShelfWindow.xaml",
+      "change": "Add the accepted dark-translucent collapsed tab and 320 px expanded grouped shelf with empty, valid/invalid drag, missing-path, save-error, pin, remove, clear, undo, and keyboard states."
+    },
+    {
+      "path": "src/Toolbox.App/Views/FileShelfWindow.xaml.cs",
+      "change": "Handle external FileDrop validation/grouping, standard drag-out, successful-result cleanup for unpinned items, group and item actions, focus behavior, auto-expand, collapse, per-monitor placement, DPI, and reduced motion."
+    },
+    {
+      "path": "src/Toolbox.App/Native/FileShelfWindowInterop.cs",
+      "change": "Add minimal Win32 helpers for no-taskbar edge-window styles, non-activating drag approach, monitor work-area lookup, and display/DPI-safe placement; no shell hook or global mouse hook."
+    },
+    {
+      "path": "src/Toolbox.App/Styles/MuProductTheme.xaml",
+      "change": "Add only keyed File Shelf tab, panel, batch, row, drag-target, missing, and focus resources using inherited MU tokens."
+    },
+    {
+      "path": "src/Toolbox.App/Assets/FileShelf",
+      "change": "Produce and package the accepted shelf-board, file-tabs, and violet-drop-point module icon at 16, 20, 24, 32, 64, 128, and 256 px after authorization."
+    },
+    {
+      "path": "src/Toolbox.App/Toolbox.App.csproj",
+      "change": "Package File Shelf icon resources only; add no database, Shell extension, background service, or third-party runtime dependency."
+    },
+    {
+      "path": "src/Toolbox.App/MainWindow.xaml",
+      "change": "Update the real tool count from five to six and add one peer two-column File Shelf card with toggle, true item count, and Show/Collapse action without restyling unrelated cards."
+    },
+    {
+      "path": "src/Toolbox.App/MainWindow.xaml.cs",
+      "change": "Accept the FileShelfModule, expose enabled-change and show/collapse actions, and refresh its running, paused, visibility, and item-count state."
+    },
+    {
+      "path": "src/Toolbox.App/Services/ToolboxTrayIcon.cs",
+      "change": "Add one MU Desk-owned File Shelf command, include its checked state in the existing tray refresh, and update the started notice without creating a second icon or notification path."
+    },
+    {
+      "path": "src/Toolbox.App/App.xaml.cs",
+      "change": "Construct and start one FileShelfModule, wire settings/tray/home/pause/shutdown/error flows, and dispose it while preserving current single-instance and all existing module behavior."
+    },
+    {
+      "path": "src/Toolbox.Tests/Program.cs",
+      "change": "Add deterministic default/normalization, validation, 200-item cap, same-drop grouping, pin behavior, successful/failed drag-out mutation, atomic save, backup recovery, rollback, privacy, and legacy-settings tests."
+    }
+  ],
+  "technical_route": {
+    "drag_in": "WPF AllowDrop over a topmost edge window; accept only DataFormats.FileDrop values that resolve to existing local file-system files or directories at drop time; reject virtual files, text URLs, and non-file data.",
+    "drag_out": "WPF DragDrop.DoDragDrop with a standard FileDrop DataObject advertising copy/link-compatible effects but never deleting, moving, or renaming the source path; remove unpinned metadata only when Windows returns a non-None result.",
+    "window": "One borderless WPF window inside MU Desk, collapsed to an edge tab and expanded in place; Windows monitor work-area and per-monitor DPI determine clamped placement.",
+    "icons": "Reuse Windows Shell small file-type icons at runtime and the accepted MU module icon for the host/tab; no content thumbnails or persistent icon cache.",
+    "storage": "Versioned JSON under %LocalAppData%/MU Desk/file-shelf using temp write, atomic replace, one backup, and in-memory rollback on failure.",
+    "runtime_weight": "No database, file watcher, polling worker, clipboard listener, Shell extension, browser component, network client, child process, or independent updater."
+  },
+  "preserve": [
+    "MU Desk remains the single process, user entry, tray, startup item, settings owner, version, About surface, and package.",
+    "Quick Ring, Dynamic Capture, CISP Question Bank, Cursor Gallery, Desktop Organizer, startup, single-instance activation, and current tray actions remain behaviorally unchanged.",
+    "Existing Toolbox settings deserialize with new File Shelf defaults and keep every previous value.",
+    "No original file or directory is copied into MU Desk, moved, renamed, deleted, content-read, indexed, uploaded, or logged by the module.",
+    "Disabling, pausing, resetting, upgrading, uninstalling normally, or removing File Shelf wiring does not delete source paths or silently clear shelf metadata.",
+    "A failed drop-in write, failed/cancelled drag-out, missing path, unavailable drive, or corrupt store never appears as successful state."
+  ],
+  "migrations": [
+    "Legacy settings without FileShelf deserialize to enabled=true, right dock, primary display fallback, and vertical position 0.50 without rewriting unrelated values.",
+    "Create %LocalAppData%/MU Desk/file-shelf lazily on the first successful shelf mutation, not merely when MU Desk starts.",
+    "When shelf.json is absent, start with an empty shelf and no error; do not generate demo entries.",
+    "When shelf.json is valid but from an older supported schema, normalize optional fields in memory and write the new schema only on the next explicit mutation.",
+    "When the primary store is invalid, read shelf.json.bak without overwriting the corrupt primary until the user performs a successful mutation.",
+    "Never import, enumerate, move, or delete arbitrary recent files, clipboard history, downloads, desktop files, or previous module data."
+  ],
+  "implementation_sequence": [
+    "Add File Shelf settings/models/store in Toolbox.Core and deterministic tests for normalization, limits, atomic persistence, backup recovery, rollback, and legacy settings.",
+    "Implement FileShelfModule lifecycle and prove empty start, enable/disable, pause/resume, single-window reuse, item counts, session undo, and sanitized errors without UI polish.",
+    "Build the borderless edge window and placement interop; verify right/left docking, work-area clamping, taskbar avoidance, primary-screen fallback, and 100/150/200 percent DPI.",
+    "Implement external FileDrop validation, same-drop batching, persistence commit, duplicate-path handling within a batch, missing-path states, and the 200-item cap.",
+    "Implement item/group drag-out using standard FileDrop, copy/link-compatible advertised effects, metadata cleanup only after a non-None result, pinned retention, failure restoration, remove, clear, and undo.",
+    "Apply the accepted light-outlined home card and dark-translucent shelf states, keyboard/focus support, reduced motion, system file icons, and no-content-preview rule.",
+    "Wire ToolboxSettings, App, MainWindow, tray, pause, startup, shutdown, errors, and update the real home tool count while preserving all existing module paths.",
+    "Produce and integrate the accepted File Shelf module icon family, validate small sizes, and retain a code-native fallback.",
+    "Run clean tests/build/publish, functional Explorer and cross-application drag checks, persistence/recovery/privacy checks, visual/accessibility checks, representative regression paths, and record evidence in acceptance.md."
+  ],
+  "risks": [
+    {
+      "risk": "A topmost edge window could obstruct applications or unexpectedly take focus.",
+      "mitigation": "Keep the idle hit area limited to the accepted tab, use non-activating drag approach behavior, enter keyboard focus only after explicit click/home/tray opening, and test taskbar/full-screen boundaries."
+    },
+    {
+      "risk": "WPF OLE drag-and-drop behavior differs across Explorer, browsers, editors, elevated applications, and virtual-file sources.",
+      "mitigation": "Support only standard FileDrop paths, show concrete rejection for virtual sources, test Explorer plus representative target apps, and never claim universal support or success before the returned effect."
+    },
+    {
+      "risk": "A target application could interpret a drag in a way that surprises the user.",
+      "mitigation": "Advertise copy/link-compatible effects rather than Move, never call file operations from MU Desk, describe completion as '已拖出' rather than copied/moved, and retain pinned metadata."
+    },
+    {
+      "risk": "Removing metadata immediately on mouse release could lose the shelf entry when the target rejects the drop.",
+      "mitigation": "Keep an in-place placeholder during DoDragDrop and commit removal only after a non-None result and a successful atomic store write; otherwise restore the row."
+    },
+    {
+      "risk": "Monitor topology, taskbar position, negative coordinates, and per-monitor DPI can place or blur the shelf incorrectly.",
+      "mitigation": "Use monitor work areas and effective coordinates, persist relative vertical position, clamp every show/topology change, and test left/right/above primary displays at 100, 150, and 200 percent."
+    },
+    {
+      "risk": "Paths may become unavailable or expose private project/customer names through logs.",
+      "mitigation": "Check availability only on display/drag, retain explicit unavailable rows, sanitize diagnostics to counts/stages/random IDs, and never log full paths or filenames."
+    },
+    {
+      "risk": "A write failure or corrupt JSON could silently lose a shelf containing many paths.",
+      "mitigation": "Use temp plus atomic replace, one known-good backup, validate before commit, rollback in-memory mutations, preserve corrupt files, and test simulated I/O and malformed JSON failures."
+    },
+    {
+      "risk": "Default-enabled upgrade behavior could feel intrusive.",
+      "mitigation": "Start strictly collapsed at the accepted 36 px edge profile, never steal focus or notify, expose an immediate card toggle, and ensure pause/disable removes the edge window completely."
+    }
+  ],
+  "verification": {
+    "build": [
+      ".\\build-toolbox.ps1",
+      ".\\publish-toolbox.ps1",
+      "Release build and Toolbox, MouseRing, and DesktopOrganizer tests pass from a clean process start.",
+      "Published output contains one MU Desk executable and File Shelf assets, with no module executable, database, service, Shell extension, file watcher dependency, or network client."
+    ],
+    "core_tests": [
+      "Legacy settings gain valid FileShelf defaults while every prior value remains unchanged.",
+      "Dock side, device name, and vertical position normalize safely, including NaN/out-of-range input.",
+      "One drop creates one ordered batch; invalid/duplicate inputs are reported deterministically and total entries never exceed 200.",
+      "Pinned items survive successful drag-out; unpinned items are removed only after a simulated non-None result; None/cancel leaves all items unchanged.",
+      "Remove, clear-unpinned, and one-session undo mutate metadata only and never call file deletion or movement.",
+      "Atomic save leaves the last reliable shelf intact on simulated failure and backup recovery preserves valid items without overwriting corrupt evidence.",
+      "Serialized data contains only accepted metadata fields; sanitized diagnostics omit absolute paths and filenames."
+    ],
+    "drag_and_shelf_flow": [
+      "Start with an empty store: MU Desk shows one collapsed edge tab, no expanded panel, no focus steal, no data folder creation, and a true zero count.",
+      "Drag one file, one folder, and a three-item selection from Explorer; verify exact grouping, order, names, type icons, item count, and persistence after MU Desk restart.",
+      "Drag a virtual browser item, text URL, nonexistent path, inaccessible path, and a selection exceeding the cap; verify rejection and no false saved state.",
+      "Drag one item and one whole batch to Explorer and representative accepting apps; verify returned-result handling, unpinned cleanup, pinned retention, and no source deletion/move by MU Desk.",
+      "Cancel over the desktop or use a rejecting target; verify the placeholder restores and copy reads '仍在货架上'.",
+      "Disconnect/reconnect a removable or network location and verify unavailable state, no automatic removal, and recovery on the next explicit check.",
+      "Disable, re-enable, pause, resume, show, collapse, tray-open, home-open, repeated-open, and shutdown; verify one window and correct persisted state throughout."
+    ],
+    "visual_and_accessibility": [
+      "Inspect the sixth home card, tool count, collapsed tab, expanded shelf, groups, rows, empty, valid/invalid drag, missing, persistence error, undo, and clear confirmation against accepted contracts.",
+      "At 100, 150, and 200 percent scaling on available monitor arrangements, the shelf stays inside the work area, avoids the taskbar, remains sharp, and clamps safely after a monitor disappears.",
+      "Keyboard can open/collapse, traverse rows, pin, remove, clear, undo, and escape without deleting data; focus remains visible and every icon control has an accessible name.",
+      "High contrast and reduced motion preserve all information and functions; no status relies only on translucency, animation, or violet color.",
+      "The final module icon is legible at 16, 20, 24, and 32 px and uses the accepted shelf/file-tabs/violet-drop-point metaphor."
+    ],
+    "privacy_and_recovery": [
+      "Monitor process/network behavior while idle and dragging: no child process, file watcher, clipboard listener, directory scan, content read, upload, or network request occurs.",
+      "Inspect settings, shelf JSON, backup, logs, and published output: paths exist only in accepted shelf metadata/error UI and never in logs or telemetry.",
+      "Simulate disk full, access denied, malformed primary JSON, malformed backup, atomic replace failure, and path disappearance; each remains visible and never produces false success or silent clearing.",
+      "Reset settings preserves shelf entries; clear-data confirmation states that originals remain; ordinary upgrade/publish does not remove the local shelf root.",
+      "Quick Ring, Dynamic Capture, CISP Question Bank, Cursor Gallery, Desktop Organizer, startup, tray pause/exit, and single-instance activation pass representative smoke paths."
+    ]
+  },
+  "rollback_and_recovery": [
+    "All new user metadata is isolated under %LocalAppData%/MU Desk/file-shelf and no existing module data is moved, renamed, or deleted.",
+    "If the edge window cannot initialize, disable only File Shelf for the session, keep MU Desk and every other module operational, and surface the real error through the unified tray channel.",
+    "If the store cannot load, preserve primary and backup files, keep an explicit in-memory empty/error state, and offer the data location rather than overwriting evidence.",
+    "If a mutation cannot persist, restore the last reliable in-memory shelf and keep source paths untouched.",
+    "Removing File Shelf wiring from a future build leaves shelf.json as readable local JSON and leaves every referenced source file or folder exactly where it was."
+  ]
+}

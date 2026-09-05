@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>ReminderNotes</AssemblyName>
+    <ApplicationIcon>Assets\ReminderNotes.ico</ApplicationIcon>
+    <RootNamespace>PersonalTools.App</RootNamespace>
+    <PlatformTarget>x64</PlatformTarget>
+    <SelfContained>false</SelfContained>
+    <Version>0.1.0</Version>
+    <AssemblyTitle>Mujun Memo</AssemblyTitle>
+    <Product>Mujun Memo</Product>
+    <Description>可贴到桌面并由其他程序调用的本地随记与提醒工具</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalTools.Core\PersonalTools.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\ReminderNotes.ico" />
+    <Resource Include="Assets\ReminderNotes.ico" />
+  </ItemGroup>
+</Project>

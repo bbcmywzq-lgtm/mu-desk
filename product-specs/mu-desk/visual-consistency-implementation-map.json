@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "authorized_at": "2026-08-22",
+  "authorization_evidence": "用户在六模块视觉一致性检查报告后明确回复‘改吧’。",
+  "scope": "Apply the already accepted MU Product Standard 1.0.1 surface profiles, tokens, hierarchy, functional naming, and finished-product copy to the six modules currently exposed by MU Desk without changing module behavior or data.",
+  "surfaces": {
+    "light_outlined": [
+      "MU Desk home",
+      "CISP question bank",
+      "Quick Ring settings",
+      "Dynamic Capture settings",
+      "Desktop Organizer settings",
+      "Cursor Gallery"
+    ],
+    "dark_translucent": [
+      "Quick Ring radial menu",
+      "Desktop Organizer overlays",
+      "Dynamic Capture selection and HUD",
+      "File Shelf edge panel"
+    ]
+  },
+  "owned_files": [
+    "src/Toolbox.App/App.xaml",
+    "src/Toolbox.App/Styles/MuProductTheme.xaml",
+    "src/Toolbox.App/MainWindow.xaml",
+    "src/Toolbox.App/App.xaml.cs",
+    "src/Toolbox.App/Services/ToolboxTrayIcon.cs",
+    "src/Toolbox.App/Views/CispQuestionBankWindow.xaml",
+    "src/Toolbox.App/Views/EffectCaptureSettingsWindow.xaml",
+    "src/Toolbox.App/Views/FileShelfWindow.xaml",
+    "src/Toolbox.App/Views/FileShelfWindow.xaml.cs",
+    "src/MouseRing.App/App.xaml",
+    "src/MouseRing.App/Views/SettingsWindow.xaml",
+    "src/MouseRing.App/Views/RadialMenuWindow.xaml",
+    "src/MouseRing.App/Views/RadialMenuControl.cs",
+    "src/DesktopOrganizer.App/DesktopOrganizerModule.cs",
+    "src/DesktopOrganizer.App/Views/SettingsWindow.xaml",
+    "src/DesktopOrganizer.App/Views/SettingsWindow.xaml.cs"
+  ],
+  "preserve": [
+    "All module behavior, persistence, shortcuts, tray ownership, startup behavior, and data locations remain unchanged.",
+    "Cursor Gallery remains the accepted reference light-outlined collection surface.",
+    "Desktop Organizer runtime zones, Dynamic Capture overlays, and File Shelf remain dark-translucent rather than being forced into the management profile.",
+    "Legacy standalone launchers remain development-or-compatibility-only."
+  ],
+  "verification": [
+    "Run build-toolbox.ps1 and all existing Toolbox, MouseRing, and DesktopOrganizer tests.",
+    "Publish the local Windows x64 MU Desk build.",
+    "Inspect the home, CISP window, Quick Ring menu and settings, Dynamic Capture settings, Desktop Organizer settings, Cursor Gallery, and File Shelf at the current Windows scale."
+  ]
+}

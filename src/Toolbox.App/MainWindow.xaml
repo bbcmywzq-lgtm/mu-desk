@@ -1,0 +1,444 @@
+<Window x:Class="PersonalToolbox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MU Desk"
+        Icon="/Assets/App/mu-desk.ico"
+        Width="1020"
+        Height="740"
+        MinWidth="900"
+        MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource MuCanvasBrush}"
+        FontFamily="Microsoft YaHei UI"
+        FontSize="14">
+    <Window.Resources>
+        <Style x:Key="SwitchStyle" TargetType="CheckBox">
+            <Setter Property="Width" Value="46" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid Width="46" Height="26">
+                            <Border x:Name="Track" CornerRadius="13" Background="#DAD6DE"
+                                    BorderBrush="{StaticResource MuOutlineBrush}" BorderThickness="1.2" />
+                            <Ellipse x:Name="Thumb" Width="18" Height="18" Margin="4" HorizontalAlignment="Left"
+                                     Fill="{StaticResource MuSurfaceBrush}" Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.1">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect BlurRadius="3" ShadowDepth="1" Opacity="0.22" />
+                                </Ellipse.Effect>
+                            </Ellipse>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Track" Property="Background" Value="{StaticResource MuAccentBrush}" />
+                                <Setter TargetName="Thumb" Property="HorizontalAlignment" Value="Right" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="QuietButton" TargetType="Button" BasedOn="{StaticResource MuSecondaryButton}">
+            <Setter Property="Padding" Value="14,8" />
+        </Style>
+        <Style x:Key="PrimaryCardButton" TargetType="Button" BasedOn="{StaticResource MuPrimaryButton}">
+            <Setter Property="Padding" Value="15,8" />
+        </Style>
+        <Style x:Key="ToolCard" TargetType="Border">
+            <Setter Property="Padding" Value="18" />
+            <Setter Property="Margin" Value="7" />
+            <Setter Property="Background" Value="{StaticResource MuSurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource MuOutlineBrush}" />
+            <Setter Property="BorderThickness" Value="1.2" />
+            <Setter Property="CornerRadius" Value="14" />
+        </Style>
+        <Style x:Key="ModuleIconFrame" TargetType="Border">
+            <Setter Property="Width" Value="46" />
+            <Setter Property="Height" Value="46" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Background" Value="{StaticResource MuAccentSoftBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource MuOutlineBrush}" />
+            <Setter Property="BorderThickness" Value="1.2" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource MuSurfaceBrush}" BorderBrush="{StaticResource MuLineBrush}" BorderThickness="0,0,0,1">
+            <Grid Margin="38,27,38,23">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock FontSize="28" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="MU Desk" />
+                    <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}" Text="一个入口，集中管理本机桌面工具。" />
+                </StackPanel>
+                <Border Grid.Column="1" Padding="12,7" CornerRadius="16" Background="{StaticResource MuAccentSoftBrush}" VerticalAlignment="Center">
+                    <TextBlock Foreground="{StaticResource MuAccentBrush}" FontWeight="SemiBold" Text="本机工具 · 9" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="31,17,31,12">
+                <TextBlock Margin="2,0,0,12" FontSize="12" FontWeight="SemiBold" Foreground="#8A93A2" Text="工具模块" />
+
+                <UniformGrid Columns="2">
+                <Border Style="{StaticResource ToolCard}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}">
+                            <Grid Width="34" Height="34">
+                                <Ellipse Margin="2" Fill="{StaticResource MuSurfaceBrush}"
+                                         Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.7" />
+                                <Path Fill="{StaticResource MuAccentBrush}" Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.2"
+                                      Data="M17,2 A15,15 0 0 1 32,17 L22,17 A5,5 0 0 0 17,12 Z" />
+                                <Line X1="17" Y1="2" X2="17" Y2="12" Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.4" />
+                                <Line X1="2" Y1="17" X2="12" Y2="17" Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.4" />
+                                <Line X1="22" Y1="17" X2="32" Y2="17" Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.4" />
+                                <Line X1="17" Y1="22" X2="17" Y2="32" Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.4" />
+                                <Ellipse Width="10" Height="10" Fill="{StaticResource MuSurfaceBrush}"
+                                         Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.5" />
+                                <Path Fill="{StaticResource MuSurfaceBrush}" Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.2"
+                                      Data="M26,3 L32,1 L30,8 Z" />
+                            </Grid>
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="Orbit · 快捷轮盘" />
+                                <Border x:Name="MouseRingStatusPill" Margin="10,0,0,0" Padding="9,3" CornerRadius="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse x:Name="MouseRingStatusDot" Width="6" Height="6" Margin="0,0,6,0" />
+                                        <TextBlock x:Name="MouseRingStatusText" FontSize="11" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}" Text="右键按住 + 左键轻点，呼出快捷轮盘。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button Style="{StaticResource PrimaryCardButton}" Content="预览菜单" Click="MouseRingPreview_OnClick" />
+                                <Button Margin="9,0,0,0" Style="{StaticResource QuietButton}" Content="设置" Click="MouseRingSettings_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                        <CheckBox x:Name="MouseRingToggle" Grid.Column="2" Style="{StaticResource SwitchStyle}" VerticalAlignment="Top"
+                                  Checked="MouseRingToggle_OnChanged" Unchecked="MouseRingToggle_OnChanged" />
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource ToolCard}" BorderBrush="#343139">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}">
+                            <Image Width="34" Height="34" Source="{StaticResource MuCueIcon}" />
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="Cue · 屏幕讲解" />
+                                <Border x:Name="CueStatusPill" Margin="10,0,0,0" Padding="9,3" CornerRadius="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse x:Name="CueStatusDot" Width="6" Height="6" Margin="0,0,6,0" />
+                                        <TextBlock x:Name="CueStatusText" FontSize="11" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}"
+                                       Text="聚焦、放大并讲清屏幕内容。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button Style="{StaticResource PrimaryCardButton}" Content="打开工具栏" Click="CueToolbar_OnClick" />
+                                <Button Margin="9,0,0,0" Style="{StaticResource QuietButton}" Content="设置" Click="CueSettings_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                        <CheckBox x:Name="CueToggle" Grid.Column="2" Style="{StaticResource SwitchStyle}" VerticalAlignment="Top"
+                                  Checked="CueToggle_OnChanged" Unchecked="CueToggle_OnChanged" />
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource ToolCard}" BorderBrush="#29292F">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}">
+                            <Image Width="34" Height="34" Source="{StaticResource MuEffectCaptureIcon}" />
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="#25252A" Text="Clip · 动态拾取" />
+                                <Border Margin="10,0,0,0" Padding="9,3" CornerRadius="10" Background="#F0EAFB">
+                                    <TextBlock FontSize="11" Foreground="#6842B4" Text="按需录制" />
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="#6D6D77"
+                                       Text="圈选短动效，整理后带到 Codex 输入框。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button Style="{StaticResource PrimaryCardButton}"
+                                        Content="开始拾取" Click="EffectCapture_OnClick" />
+                                <Button Margin="9,0,0,0" Style="{StaticResource QuietButton}"
+                                        Content="设置" Click="EffectCaptureSettings_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Border Grid.Column="2" Padding="11,6" CornerRadius="12" Background="#F5F1FC" VerticalAlignment="Top">
+                            <TextBlock x:Name="EffectCaptureShortcutText" Foreground="#6842B4" FontSize="11" Text="Ctrl + Alt + R" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource ToolCard}" BorderBrush="#343139">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}">
+                            <Image Width="34" Height="34" Source="{StaticResource MuCispQuestionBankIcon}" />
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="CISP 题库" />
+                                <Border Margin="10,0,0,0" Padding="9,3" CornerRadius="10" Background="{StaticResource MuAccentSoftBrush}">
+                                    <TextBlock FontSize="11" Foreground="{StaticResource MuAccentBrush}" Text="题库 · 错题本" />
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}"
+                                       Text="907 道综合练习；另有 2026 最新八套题独立入口。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button Style="{StaticResource PrimaryCardButton}" Content="开始练习"
+                                        Click="CispQuestionBank_OnClick" />
+                                <Button Margin="9,0,0,0" Style="{StaticResource QuietButton}" Content="2026 八套题"
+                                        Click="CispLatestSets_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Border Grid.Column="2" Padding="11,6" CornerRadius="12"
+                                Background="{StaticResource MuSurfaceQuietBrush}" VerticalAlignment="Top">
+                            <TextBlock Foreground="{StaticResource MuMutedBrush}" FontSize="11" Text="907 题" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource ToolCard}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}">
+                            <Image Width="34" Height="34" Source="{StaticResource MuCursorGalleryIcon}" />
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="Tip · 光标装扮" />
+                                <Border Margin="10,0,0,0" Padding="9,3" CornerRadius="10" Background="#F1EDFA">
+                                    <TextBlock FontSize="11" Foreground="#6951B5" Text="按需打开" />
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}" Text="浏览并应用本机 Windows 光标皮肤。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button Style="{StaticResource PrimaryCardButton}" Content="打开画廊" Click="CursorGallery_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Border Grid.Column="2" Padding="11,6" CornerRadius="12"
+                                Background="{StaticResource MuSurfaceQuietBrush}" VerticalAlignment="Top">
+                            <TextBlock Foreground="{StaticResource MuMutedBrush}" FontSize="11" Text="本机收藏" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource ToolCard}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}">
+                            <Grid Width="34" Height="32">
+                                <Rectangle Width="15" Height="13" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                           RadiusX="3" RadiusY="3" Fill="{StaticResource MuSurfaceBrush}"
+                                           Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.5" />
+                                <Rectangle Width="15" Height="13" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                           RadiusX="3" RadiusY="3" Fill="{StaticResource MuSurfaceBrush}"
+                                           Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.5" />
+                                <Rectangle Width="21" Height="15" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                           RadiusX="3" RadiusY="3" Fill="{StaticResource MuSurfaceBrush}"
+                                           Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.5" />
+                                <Rectangle Width="11" Height="15" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                           RadiusX="3" RadiusY="3" Fill="{StaticResource MuAccentBrush}"
+                                           Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.5" />
+                                <Path Width="11" Height="11" Stretch="Fill" Fill="{StaticResource MuAccentBrush}"
+                                      Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.1"
+                                      Data="M5.5,0 C6.2,4.1 6.9,4.8 11,5.5 C6.9,6.2 6.2,6.9 5.5,11 C4.8,6.9 4.1,6.2 0,5.5 C4.1,4.8 4.8,4.1 5.5,0 Z" />
+                            </Grid>
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="Grid · 桌面整理" />
+                                <Border x:Name="DesktopStatusPill" Margin="10,0,0,0" Padding="9,3" CornerRadius="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse x:Name="DesktopStatusDot" Width="6" Height="6" Margin="0,0,6,0" />
+                                        <TextBlock x:Name="DesktopStatusText" FontSize="11" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}" Text="桌面分区、自动整理规则与布局管理。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button Style="{StaticResource PrimaryCardButton}" Content="显示桌面" Click="ShowDesktop_OnClick" />
+                                <Button Margin="9,0,0,0" Style="{StaticResource QuietButton}" Content="设置" Click="DesktopSettings_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                        <CheckBox x:Name="DesktopToggle" Grid.Column="2" Style="{StaticResource SwitchStyle}" VerticalAlignment="Top"
+                                  Checked="DesktopToggle_OnChanged" Unchecked="DesktopToggle_OnChanged" />
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource ToolCard}" BorderBrush="#343139">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}">
+                            <Image Width="34" Height="34" Source="{StaticResource MuFileShelfIcon}" />
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="Drop · 文件暂存" />
+                                <Border x:Name="FileShelfStatusPill" Margin="10,0,0,0" Padding="9,3" CornerRadius="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse x:Name="FileShelfStatusDot" Width="6" Height="6" Margin="0,0,6,0" />
+                                        <TextBlock x:Name="FileShelfStatusText" FontSize="11" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}"
+                                       Text="文件先搁一下，换个窗口再拖走。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button x:Name="FileShelfShowButton" Style="{StaticResource PrimaryCardButton}"
+                                        Content="显示货架" Click="FileShelfShow_OnClick" />
+                                <TextBlock x:Name="FileShelfCountText" Margin="11,0,0,0" VerticalAlignment="Center"
+                                           FontSize="12" Foreground="{StaticResource MutedBrush}" Text="0 项" />
+                            </StackPanel>
+                        </StackPanel>
+                        <CheckBox x:Name="FileShelfToggle" Grid.Column="2" Style="{StaticResource SwitchStyle}" VerticalAlignment="Top"
+                                  Checked="FileShelfToggle_OnChanged" Unchecked="FileShelfToggle_OnChanged" />
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource ToolCard}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}">
+                            <Grid Width="32" Height="34">
+                                <Rectangle Width="25" Height="30" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                           RadiusX="4" RadiusY="4" Fill="{StaticResource MuSurfaceBrush}"
+                                           Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.5" />
+                                <Line X1="6" Y1="11" X2="19" Y2="11" Stroke="{StaticResource MuAccentBrush}" StrokeThickness="2" />
+                                <Line X1="6" Y1="17" X2="17" Y2="17" Stroke="{StaticResource MuAccentBrush}" StrokeThickness="2" />
+                                <Line X1="6" Y1="23" X2="14" Y2="23" Stroke="{StaticResource MuAccentBrush}" StrokeThickness="2" />
+                                <Ellipse Width="14" Height="14" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                         Fill="{StaticResource MuAccentBrush}" Stroke="{StaticResource MuOutlineBrush}" StrokeThickness="1.3" />
+                                <Line X1="25" Y1="4" X2="25" Y2="8" Stroke="White" StrokeThickness="1.5" />
+                                <Line X1="25" Y1="8" X2="28" Y2="10" Stroke="White" StrokeThickness="1.5" />
+                            </Grid>
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="Memo · 随记提醒" />
+                                <Border Margin="10,0,0,0" Padding="9,3" CornerRadius="10" Background="{StaticResource MuAccentSoftBrush}">
+                                    <TextBlock FontSize="11" Foreground="{StaticResource MuAccentBrush}" Text="本地模块" />
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}"
+                                       Text="一处管理随记、提醒与桌面卡片。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button Style="{StaticResource PrimaryCardButton}" Content="打开 Memo"
+                                        Click="ReminderNotesNote_OnClick" />
+                                <Button Margin="9,0,0,0" Style="{StaticResource QuietButton}" Content="新建提醒"
+                                        Click="ReminderNotesReminder_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Border Grid.Column="2" Padding="11,6" CornerRadius="12"
+                                Background="{StaticResource MuSurfaceQuietBrush}" VerticalAlignment="Top">
+                            <TextBlock Foreground="{StaticResource MuMutedBrush}" FontSize="11" Text="本地保存" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource ToolCard}" BorderBrush="#343139">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="58" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ModuleIconFrame}" ClipToBounds="True">
+                            <Image Width="42" Height="42" Source="/Assets/Pet/lightpet.png" Stretch="UniformToFill" />
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" Text="Pal · 桌面伙伴" />
+                                <Border x:Name="LightPetStatusPill" Margin="10,0,0,0" Padding="9,3" CornerRadius="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse x:Name="LightPetStatusDot" Width="6" Height="6" Margin="0,0,6,0" />
+                                        <TextBlock x:Name="LightPetStatusText" FontSize="11" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Margin="0,7,0,0" Foreground="{StaticResource MutedBrush}"
+                                       Text="桌面角色陪伴、边缘移动与轻量互动。" />
+                            <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+                                <Button x:Name="LightPetVisibilityButton" Style="{StaticResource PrimaryCardButton}"
+                                        Content="隐藏桌宠" Click="LightPetVisibility_OnClick" />
+                                <Button x:Name="LightPetSettingsButton" Margin="9,0,0,0" Style="{StaticResource QuietButton}"
+                                        Content="设置" Click="LightPetSettings_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+                        <CheckBox x:Name="LightPetToggle" Grid.Column="2" Style="{StaticResource SwitchStyle}" VerticalAlignment="Top"
+                                  Checked="LightPetToggle_OnChanged" Unchecked="LightPetToggle_OnChanged" />
+                    </Grid>
+                </Border>
+                </UniformGrid>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="2" Background="{StaticResource MuSurfaceBrush}" BorderBrush="{StaticResource MuLineBrush}" BorderThickness="0,1,0,0">
+            <Grid Margin="38,17">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock FontWeight="SemiBold" Foreground="{StaticResource MuInkBrush}" Text="随 Windows 启动" />
+                    <TextBlock Margin="0,4,0,0" FontSize="12" Foreground="{StaticResource MutedBrush}"
+                               Text="只启动 MU Desk，由它统一加载已启用的桌面工具。" />
+                </StackPanel>
+                <CheckBox x:Name="StartupToggle" Grid.Column="1" Style="{StaticResource SwitchStyle}" VerticalAlignment="Center"
+                          Checked="StartupToggle_OnChanged" Unchecked="StartupToggle_OnChanged" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

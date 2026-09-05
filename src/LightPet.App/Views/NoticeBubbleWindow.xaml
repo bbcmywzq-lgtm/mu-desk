@@ -1,0 +1,89 @@
+<Window x:Class="LightPet.App.Views.NoticeBubbleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Pal · 通知"
+        Width="198"
+        Height="64"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        ShowActivated="False"
+        ShowInTaskbar="False"
+        Topmost="True"
+        Focusable="False"
+        IsHitTestVisible="False"
+        SnapsToDevicePixels="True">
+  <Grid x:Name="BubbleRoot"
+        Opacity="1"
+        RenderTransformOrigin="0.5,0.5">
+    <Grid.RenderTransform>
+      <TransformGroup>
+        <ScaleTransform x:Name="BubbleScale" ScaleX="1" ScaleY="1" />
+        <TranslateTransform x:Name="BubbleOffset" />
+      </TransformGroup>
+    </Grid.RenderTransform>
+
+    <Path x:Name="Tail"
+          Width="14"
+          Height="8"
+          Data="M 0,0 L 14,0 L 7,8 Z"
+          Fill="#FFFEFF"
+          Stroke="#DDD6E7"
+          StrokeThickness="1"
+          Stretch="Fill"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Bottom"
+          Margin="0,0,0,5"
+          RenderTransformOrigin="0.5,0.5">
+      <Path.RenderTransform>
+        <RotateTransform Angle="0" />
+      </Path.RenderTransform>
+    </Path>
+
+    <Border x:Name="Card"
+            Margin="8,5,8,11"
+            Padding="12,7,12,8"
+            Background="#FFFEFF"
+            BorderBrush="#DDD6E7"
+            BorderThickness="1"
+            CornerRadius="11">
+      <Border.Effect>
+        <DropShadowEffect BlurRadius="8"
+                          Direction="270"
+                          ShadowDepth="1"
+                          Color="#2A1738"
+                          Opacity="0.13" />
+      </Border.Effect>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition x:Name="HeaderSpacer" Height="5" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="HeaderPanel" Orientation="Horizontal">
+          <Ellipse Width="5"
+                   Height="5"
+                   Margin="0,0,6,0"
+                   Fill="#8660AD"
+                   VerticalAlignment="Center" />
+          <TextBlock Text="Violet"
+                     Foreground="#806895"
+                     FontFamily="Segoe UI Variable Text"
+                     FontSize="9.5"
+                     FontWeight="Medium" />
+        </StackPanel>
+        <TextBlock x:Name="MessageText"
+                   Grid.Row="2"
+                   MaxHeight="56"
+                   Foreground="#38313F"
+                   FontFamily="Microsoft YaHei UI"
+                   FontSize="13"
+                   LineHeight="19"
+                   LineStackingStrategy="BlockLineHeight"
+                   TextWrapping="Wrap"
+                   TextTrimming="CharacterEllipsis" />
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

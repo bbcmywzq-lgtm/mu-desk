@@ -1,0 +1,19 @@
+{
+  "sku_id": "MU-DESK",
+  "standard_version": "1.0.1",
+  "scope": "approved-module-display-names-only",
+  "approval": "2026-09-05 用户在八项命名方案后回复：可以，整体修改一下",
+  "names": {
+    "mujun-cue": ["Mujun Cue", "Cue · 屏幕讲解"],
+    "quick-ring": ["Mujun Orbit", "Orbit · 快捷轮盘"],
+    "effect-capture": ["Mujun Clip", "Clip · 动态拾取"],
+    "cursor-gallery": ["Mujun Tip", "Tip · 光标装扮"],
+    "desktop-organizer": ["Mujun Grid", "Grid · 桌面整理"],
+    "file-shelf": ["Mujun Drop", "Drop · 文件暂存"],
+    "reminder-notes": ["Mujun Memo", "Memo · 随记提醒"],
+    "desktop-companion": ["Mujun Pal", "Pal · 桌面伙伴"]
+  },
+  "implementation": ["首页与窗口标题", "模块显示名与提示", "宿主及兼容启动器托盘文案", "程序集展示元数据", "当前使用说明"],
+  "preserve": ["MU Desk 总包", "CISP 题库", "可执行文件与程序集标识", "命名空间与模块 ID", "管道与互斥锁", "启动项和数据路径", "已有功能、动画与图标", "历史决策记录"],
+  "verification": ["全量构建", "现有离线测试", "命名静态检查", "主页布局检查", "本地独立输出目录发布"]
+}

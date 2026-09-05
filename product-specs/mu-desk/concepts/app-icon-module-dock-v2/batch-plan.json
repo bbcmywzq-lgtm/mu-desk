@@ -1,0 +1,28 @@
+{
+  "batch_id": "mu-desk-module-dock-v2",
+  "prompt_summary": "Three small-size-first variants of the user-selected Module Dock direction",
+  "items": [
+    {
+      "id": "dock-open",
+      "name": "A1 开放托盘",
+      "origin": "requested",
+      "description": "A charcoal open-top U-shaped tray holding three broad modules, violet side modules and one off-white center module; no enclosing app tile",
+      "contexts": ["windows-taskbar", "tray", "alt-tab", "application-icon"],
+      "forbidden_placements": ["module navigation"]
+    },
+    {
+      "id": "dock-violet-base",
+      "name": "A2 紫色底座",
+      "origin": "variant",
+      "variant_of": "dock-open",
+      "description": "A thick violet U-shaped dock as the dominant silhouette, holding three broad charcoal and off-white module tabs"
+    },
+    {
+      "id": "dock-solid-tile",
+      "name": "A3 完整应用块",
+      "origin": "variant",
+      "variant_of": "dock-open",
+      "description": "A solid violet rounded-square application block with a single broad three-tab negative-space motif and a short charcoal lower anchor"
+    }
+  ]
+}

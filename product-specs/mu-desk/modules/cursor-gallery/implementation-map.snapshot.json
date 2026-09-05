@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "scope": "Refactor only the MU Desk Cursor Gallery module to the accepted definition, visual system, and system packaging contracts.",
+  "owned_projects": [
+    "src/Toolbox.App",
+    "src/Toolbox.Core",
+    "src/Toolbox.Tests"
+  ],
+  "owned_files": [
+    {
+      "path": "src/Toolbox.App/App.xaml",
+      "change": "Merge keyed MU shared resources without globally restyling unrelated windows."
+    },
+    {
+      "path": "src/Toolbox.App/Styles/MuProductTheme.xaml",
+      "change": "New keyed WPF tokens and controls implementing MU Product Standard 1.0.0."
+    },
+    {
+      "path": "src/Toolbox.App/Views/CursorGalleryWindow.xaml",
+      "change": "Replace the equal-card wall with the accepted collection-detail composition and complete states."
+    },
+    {
+      "path": "src/Toolbox.App/Views/CursorGalleryWindow.xaml.cs",
+      "change": "Own selection, detail, feedback, keyboard focus, and real loading/error state transitions."
+    },
+    {
+      "path": "src/Toolbox.App/Modules/CursorGalleryModule.cs",
+      "change": "Preserve one on-demand window and MU Desk error forwarding."
+    },
+    {
+      "path": "src/Toolbox.App/Modules/CursorLibraryService.cs",
+      "change": "Implement accepted target-path migration, explicit load errors, atomic metadata writes, backup, apply, and reset behavior."
+    },
+    {
+      "path": "src/Toolbox.App/Modules/CursorSkinPackage.cs",
+      "change": "Expose existing completeness, role preview, missing-role, import-note, and current-state data to the view."
+    },
+    {
+      "path": "src/Toolbox.Core/CursorGalleryLibraryMigration.cs",
+      "change": "New pure, testable helper for selecting and atomically establishing the MU Desk library copy."
+    },
+    {
+      "path": "src/Toolbox.App/MainWindow.xaml",
+      "change": "Replace only the Cursor Gallery module-card symbol and copy needed for the accepted module identity."
+    },
+    {
+      "path": "src/Toolbox.App/Assets/CursorGallery",
+      "change": "New production module icon exports generated from the approved icon direction."
+    },
+    {
+      "path": "src/Toolbox.Tests/Program.cs",
+      "change": "Add deterministic migration and compatibility tests without touching the real user registry or cursor library."
+    }
+  ],
+  "preserve": [
+    "All 17 existing skin packages and their cursor/preview paths remain reachable.",
+    "Applying a skin continues to update current-user cursor registry roles and refresh Windows.",
+    "Missing roles continue to fall back to Windows Aero/default values.",
+    "Restore Windows default remains available.",
+    "The gallery remains an on-demand window with no independent process, tray, startup item, settings, version, or installer.",
+    "MU Desk remains the only user-facing shell.",
+    "Errors remain real and visible; no fixture or demo data substitutes for a failed library."
+  ],
+  "migrations": [
+    "Prefer %LocalAppData%\\MU Desk\\cursor-gallery\\library.json when it exists.",
+    "On first use, atomically copy legacy %AppData%\\CursorSkinManager\\library.json when the new target does not exist.",
+    "Do not move or delete the legacy JSON, cursor files, preview files, or storage directories.",
+    "Write library.bak.json before modifying applied-state metadata in the MU Desk copy.",
+    "When migration cannot establish the target, keep legacy read compatibility and expose the real error."
+  ],
+  "implementation_sequence": [
+    "Add keyed MU WPF tokens and shared control styles; merge them without changing unrelated windows.",
+    "Add the pure library migration helper and deterministic tests.",
+    "Refactor CursorLibraryService to use the accepted target/legacy path contract and explicit result/error states.",
+    "Extend CursorSkinPackage presentation data without changing the serialized compatibility shape.",
+    "Refactor CursorGalleryWindow into the accepted list-detail layout and state matrix.",
+    "Preserve CursorGalleryModule single-window and error-forwarding behavior.",
+    "Produce the approved Cursor Gallery icon family and add required exports.",
+    "Wire the module icon and accepted copy into the Cursor Gallery window and its MU Desk card.",
+    "Build, run focused tests, exercise both entry points, inspect visual geometry and keyboard focus, and verify no child process remains.",
+    "Record acceptance evidence and restore any cursor registry values changed during a controlled integration check."
+  ],
+  "risks": [
+    {
+      "risk": "Legacy JSON can contain absolute paths that no longer exist.",
+      "mitigation": "Preserve paths, show incomplete/missing roles, and never discard packages merely because individual files are absent."
+    },
+    {
+      "risk": "Migration could diverge from a legacy application that still writes the old library.",
+      "mitigation": "Copy only once, leave the legacy source untouched, and document MU Desk as the writer after migration."
+    },
+    {
+      "risk": "Registry integration testing can alter the user's current cursor scheme.",
+      "mitigation": "Test core logic with fakes; for one controlled integration check, snapshot the exact current-user cursor values and restore that snapshot rather than assuming Windows default."
+    },
+    {
+      "risk": "Shared WPF resources could unintentionally restyle other modules.",
+      "mitigation": "Use keyed MU styles and apply them explicitly only inside Cursor Gallery during this scope."
+    },
+    {
+      "risk": "Seventeen role previews can create nested overflow or poor scaling.",
+      "mitigation": "Keep one named scroll region per collection/detail, verify 100% and 200% Windows scaling, and reject page-level horizontal scrolling."
+    }
+  ],
+  "verification": {
+    "build": [
+      ".\\build-toolbox.ps1",
+      "Release build and all existing Toolbox, MouseRing, and DesktopOrganizer tests pass."
+    ],
+    "tests": [
+      "New target already exists: no legacy copy and target is selected.",
+      "New target missing plus valid legacy library: atomic copy succeeds and source remains.",
+      "Migration failure: real error is returned and no successful empty library is reported.",
+      "Applied-state write creates library.bak.json.",
+      "Malformed JSON surfaces an error without overwriting either source.",
+      "CursorSkinPackage serialization remains compatible with the existing camelCase library."
+    ],
+    "windows_and_surfaces": [
+      "Open from MU Desk module card and from tray; both reuse one Cursor Gallery window.",
+      "All 17 packages remain reachable and one selected package exposes its role previews.",
+      "Current, incomplete, missing-role, empty, loading, success, and failure states are distinguishable.",
+      "Close the gallery and verify no child process or WebView remains."
+    ],
+    "system_integration": [
+      "Verify target/legacy path selection against disposable fixture directories.",
+      "Verify registry operations are current-user only.",
+      "If an actual apply check is performed, snapshot and restore the exact prior cursor registry state."
+    ],
+    "accessibility": [
+      "Keyboard can move through the skin list, reveal detail, reach Apply and Reset, and show visible focus.",
+      "Selection and current state do not rely on color alone.",
+      "Labels remain legible at 200% Windows scaling and reduced motion is respected."
+    ],
+    "visual": [
+      "Inspect normal 980x740 and minimum 820x620 windows.",
+      "Reject horizontal page scrolling, clipped previews, oversized empty cards, and hidden primary action.",
+      "Confirm inherited MU tokens, charcoal outline, violet selection, and no legacy blue card-wall styling."
+    ]
+  }
+}

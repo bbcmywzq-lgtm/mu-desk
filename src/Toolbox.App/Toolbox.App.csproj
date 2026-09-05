@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>PersonalToolbox</AssemblyName>
+    <ApplicationIcon>Assets\App\mu-desk.ico</ApplicationIcon>
+    <RootNamespace>PersonalToolbox</RootNamespace>
+    <PlatformTarget>x64</PlatformTarget>
+    <Version>0.1.0</Version>
+    <AssemblyTitle>MU Desk</AssemblyTitle>
+    <Product>MU Desk</Product>
+    <Description>集中管理内置模块与独立桌面工具</Description>
+    <Authors>PersonalToolbox</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
+    <PackageReference Include="Vortice.DirectComposition" Version="3.8.3" />
+    <PackageReference Include="Vortice.D3DCompiler" Version="3.8.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cue.Diagnostics" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Toolbox.Core\Toolbox.Core.csproj" />
+    <ProjectReference Include="..\MouseRing.App\MouseRing.App.csproj" />
+    <ProjectReference Include="..\DesktopOrganizer.App\DesktopOrganizer.App.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\App\mu-desk.ico" />
+    <None Remove="Assets\CursorGallery\*.png" />
+    <None Remove="Assets\EffectCapture\*.png" />
+    <None Remove="Assets\FileShelf\*.png" />
+    <None Remove="Assets\Cisp\**\*" />
+    <None Remove="..\LightPet.App\Assets\LightPet-icon-source.png" />
+    <Resource Include="Assets\App\mu-desk.ico" />
+    <Resource Include="Assets\CursorGallery\*.png" />
+    <Resource Include="Assets\EffectCapture\*.png" />
+    <Resource Include="Assets\FileShelf\*.png" />
+    <Resource Include="..\LightPet.App\Assets\LightPet-icon-source.png" Link="Assets\Pet\lightpet.png" />
+    <Content Include="Assets\Cisp\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

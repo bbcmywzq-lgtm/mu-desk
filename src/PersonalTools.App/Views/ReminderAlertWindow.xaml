@@ -1,0 +1,69 @@
+<Window x:Class="PersonalTools.App.Views.ReminderAlertWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Memo · 提醒" Width="400" Height="210" WindowStyle="None"
+        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True"
+        Background="Transparent" AllowsTransparency="True">
+  <Window.Resources>
+    <Style TargetType="Button">
+      <Setter Property="Padding" Value="11,6" />
+      <Setter Property="Foreground" Value="#574C66" />
+      <Setter Property="Background" Value="#F5F0FA" />
+      <Setter Property="BorderBrush" Value="#D2C4E0" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="ButtonBorder" Padding="{TemplateBinding Padding}" CornerRadius="7"
+                    Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="ButtonBorder" Property="Background" Value="#EAE0F5" />
+              </Trigger>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="ButtonBorder" Property="Background" Value="#DCCBEF" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="PrimaryAlertButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+      <Setter Property="Background" Value="#7650A6" />
+      <Setter Property="BorderBrush" Value="#7650A6" />
+      <Setter Property="Foreground" Value="White" />
+    </Style>
+  </Window.Resources>
+  <Border Margin="10" Padding="18" CornerRadius="15" Background="#FFFCFF"
+          BorderBrush="#CBB7E2" BorderThickness="1.2">
+    <Border.Effect>
+      <DropShadowEffect BlurRadius="22" ShadowDepth="4" Opacity="0.3" />
+    </Border.Effect>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <DockPanel>
+        <Button DockPanel.Dock="Right" Padding="7,2" Content="×" Click="OnDismissClick" />
+        <StackPanel Orientation="Horizontal">
+          <Ellipse Width="9" Height="9" Margin="0,0,8,0" Fill="#7650A6" />
+          <TextBlock FontSize="13" FontWeight="SemiBold" Foreground="#7650A6" Text="Memo · 随记提醒" />
+        </StackPanel>
+      </DockPanel>
+      <TextBlock x:Name="ContentText" Grid.Row="1" Margin="0,14,0,12" FontSize="17"
+                 Foreground="#2D2832" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
+      <WrapPanel Grid.Row="2">
+        <Button Style="{StaticResource PrimaryAlertButton}" Content="完成" Click="OnCompleteClick" />
+        <Button Margin="7,0,0,0" Padding="11,6" Content="10分钟后" Click="OnSnoozeTenClick" />
+        <Button Margin="7,0,0,0" Padding="11,6" Content="1小时后" Click="OnSnoozeHourClick" />
+        <Button Margin="7,0,0,0" Padding="11,6" Content="打开" Click="OnOpenClick" />
+      </WrapPanel>
+    </Grid>
+  </Border>
+</Window>

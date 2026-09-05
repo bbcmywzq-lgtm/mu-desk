@@ -1,0 +1,28 @@
+<Window x:Class="LightPet.App.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Pal · 桌面伙伴"
+        Width="130"
+        Height="130"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        AllowDrop="True"
+        DragEnter="OnExternalFileDragEnter"
+        DragOver="OnExternalFileDragOver"
+        DragLeave="OnExternalFileDragLeave"
+        Drop="OnExternalFileDrop"
+        Topmost="True"
+        SnapsToDevicePixels="True">
+  <Grid Background="Transparent">
+    <Image x:Name="PetImage"
+           Stretch="Fill"
+           RenderOptions.BitmapScalingMode="HighQuality"
+           MouseLeftButtonDown="OnPetMouseLeftButtonDown"
+           MouseLeftButtonUp="OnPetMouseLeftButtonUp"
+           MouseRightButtonUp="OnPetMouseRightButtonUp"
+           MouseMove="OnPetMouseMove" />
+  </Grid>
+</Window>

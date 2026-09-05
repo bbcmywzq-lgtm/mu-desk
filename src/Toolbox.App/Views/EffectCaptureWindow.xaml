@@ -1,0 +1,102 @@
+<Window x:Class="PersonalToolbox.Views.EffectCaptureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Clip · 动态拾取 · MU Desk" Icon="{StaticResource MuEffectCaptureIcon}"
+        Width="860" Height="650" MinWidth="720" MinHeight="560"
+        WindowStartupLocation="CenterScreen" Background="#EEF0F5"
+        FontFamily="Microsoft YaHei UI" FontSize="14">
+    <Window.Resources>
+        <Style x:Key="EffectButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Padding" Value="18,10" />
+            <Setter Property="Background" Value="#FAFAFC" />
+            <Setter Property="BorderBrush" Value="#29292F" />
+            <Setter Property="Foreground" Value="#25252A" />
+        </Style>
+        <Style x:Key="EffectPrimaryButton" TargetType="Button" BasedOn="{StaticResource EffectButton}">
+            <Setter Property="Background" Value="#8055D9" />
+            <Setter Property="BorderBrush" Value="#6D44C7" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </Window.Resources>
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock FontSize="26" FontWeight="SemiBold" Foreground="#25252A" Text="Clip · 动态拾取" />
+                <TextBlock x:Name="SubtitleText" Margin="0,6,0,0" Foreground="#6D6D77"
+                           Text="正在把短暂的界面效果整理成 AI 容易理解的素材。" />
+            </StackPanel>
+            <Button Grid.Column="1" Style="{StaticResource EffectButton}" Content="打开素材文件夹"
+                    Click="OpenFolder_OnClick" />
+        </Grid>
+
+        <Border Grid.Row="1" Margin="0,24,0,22" Padding="22" Background="#FAFAFC"
+                BorderBrush="#29292F" BorderThickness="1" CornerRadius="14">
+            <Grid>
+                <StackPanel x:Name="ProgressPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420">
+                    <Border Width="62" Height="62" CornerRadius="16" Background="#E9E0FA"
+                            BorderBrush="#29292F" BorderThickness="1">
+                        <Grid Margin="14">
+                            <Path Stroke="#8055D9" StrokeThickness="2.2" Data="M 0,10 L 0,0 L 10,0 M 24,0 L 34,0 L 34,10 M 34,24 L 34,34 L 24,34 M 10,34 L 0,34 L 0,24" />
+                            <Rectangle Width="18" Height="12" Fill="#8055D9" RadiusX="2" RadiusY="2" />
+                        </Grid>
+                    </Border>
+                    <TextBlock x:Name="StageText" Margin="0,20,0,0" HorizontalAlignment="Center"
+                               FontSize="18" FontWeight="SemiBold" Foreground="#25252A" Text="准备中" />
+                    <ProgressBar x:Name="ProgressBar" Margin="0,18,0,0" Height="8" Minimum="0" Maximum="1" />
+                    <TextBlock x:Name="ProgressDetailText" Margin="0,10,0,0" HorizontalAlignment="Center"
+                               Foreground="#777781" Text="录制结束后会自动提取变化明显的关键帧。" />
+                </StackPanel>
+
+                <Grid x:Name="ResultPanel" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Border Background="#14151B" CornerRadius="9" ClipToBounds="True">
+                        <Image x:Name="ContactSheetImage" Stretch="Uniform" Margin="10" />
+                    </Border>
+                    <Grid Grid.Row="1" Margin="0,18,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock x:Name="ResultTitleText" FontSize="17" FontWeight="SemiBold"
+                                       Foreground="#25252A" Text="素材包已准备好" />
+                            <TextBlock x:Name="ResultDetailText" Margin="0,6,0,0" Foreground="#6D6D77" />
+                        </StackPanel>
+                        <Border Grid.Column="1" Padding="12,7" Background="#F0EAFB" CornerRadius="13">
+                            <TextBlock x:Name="SendStatusText" Foreground="#6842B4" Text="尚未发送" />
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="HintText" VerticalAlignment="Center" Foreground="#6D6D77"
+                       Text="点击后会在 Codex 中打开素材和预填提示；请确认后按一次发送。" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button x:Name="CaptureAgainButton" Visibility="Collapsed" Margin="0,0,10,0"
+                        Style="{StaticResource EffectButton}" Content="再录一段" Click="CaptureAgain_OnClick" />
+                <Button x:Name="SendButton" Visibility="Collapsed" Style="{StaticResource EffectPrimaryButton}"
+                        Content="在 Codex 中打开" Click="Send_OnClick" />
+                <Button x:Name="CancelButton" Style="{StaticResource EffectButton}" Content="取消"
+                        Click="Cancel_OnClick" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

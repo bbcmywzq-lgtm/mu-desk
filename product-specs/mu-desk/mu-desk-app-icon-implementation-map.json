@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "authorized_at": "2026-08-22T01:26:19.4035633+08:00",
+  "authorization_evidence": "用户在选择 A3 完整应用块后明确要求‘你就改吧，别一步步接收了’。",
+  "completed_at": "2026-08-22T01:30:28.5235189+08:00",
+  "result": "Produced the flat A3 Module Dock icon, added platform-specific edge-to-edge optical compensation for 16–64 px after real taskbar comparison, packaged 16–512 px PNGs plus a 9-entry Windows ICO, preserved the generic coverage warning with an explicit Windows override, replaced the existing shell asset, passed the full build and preserved tests, republished the single MU Desk package, extracted the new icon from the published EXE, and confirmed it in both the live MU Desk title bar and DPI-aware taskbar capture. User confirmed the final live size was about right.",
+  "scope": "Integrate the accepted MU Desk application icon into the existing single shell only.",
+  "accepted_asset": {
+    "id": "mu-desk",
+    "source": "../../artifacts/mu-desk-app-icon-v3/manifest.json",
+    "ico": "../../artifacts/mu-desk-app-icon-v3/mu-desk.ico",
+    "qa": "../../artifacts/mu-desk-app-icon-v3/qa-report.json"
+  },
+  "owned_files": [
+    {
+      "path": "src/Toolbox.App/Toolbox.App.csproj",
+      "change": "Set ApplicationIcon and package the approved ICO as the shell icon."
+    },
+    {
+      "path": "src/Toolbox.App/MainWindow.xaml",
+      "change": "Use the MU Desk application icon for the shell window."
+    },
+    {
+      "path": "src/Toolbox.App/Views/CursorGalleryWindow.xaml",
+      "change": "Use the parent MU Desk icon for the module window title bar and Alt+Tab identity."
+    },
+    {
+      "path": "src/Toolbox.App/Assets/App/mu-desk.ico",
+      "change": "Install the accepted multi-size Windows icon asset."
+    }
+  ],
+  "preserve": [
+    "One MU Desk process, tray entry, startup identity, and package.",
+    "All module behavior, data, settings, copy, and window layouts.",
+    "ToolboxTrayIcon continues to extract the icon from the MU Desk executable."
+  ],
+  "verification": [
+    "Build and publish the existing MU Desk package.",
+    "Verify the published EXE contains a non-default associated icon.",
+    "Inspect the main window and Cursor Gallery title bars.",
+    "Inspect taskbar, Alt+Tab, and tray at normal Windows scale.",
+    "Confirm no standalone module executable is added to the package."
+  ]
+}

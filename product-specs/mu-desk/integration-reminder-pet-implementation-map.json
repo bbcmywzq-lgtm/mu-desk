@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "status": "implementation-authorized",
+  "authorized_at": "2026-08-24T00:00:00+08:00",
+  "authorization_evidence": "用户在收到随记托管和 Pet 工具箱整合的具体四项方案后明确回复‘修改’。",
+  "scope": [
+    "ReminderNotes 托管启动时不创建独立托盘，MU Desk 退出时结束托管进程",
+    "LightPet 作为桌面伙伴模块加入 MU Desk 首页、统一托盘、启动设置和进程生命周期",
+    "MU Desk 正式包携带 tools/ReminderNotes 与 tools/LightPet 工作进程",
+    "保留独立开发/兼容启动时各自托盘与既有本地数据"
+  ],
+  "owned_files": [
+    "src/PersonalTools.App/App.xaml.cs",
+    "src/Toolbox.App/Modules/ReminderNotesModule.cs",
+    "src/LightPet.App/App.xaml.cs",
+    "src/LightPet.App/Views/MainWindow.xaml.cs",
+    "src/Toolbox.App/Modules/LightPetModule.cs",
+    "src/Toolbox.Core/ToolboxSettings.cs",
+    "src/Toolbox.App/App.xaml.cs",
+    "src/Toolbox.App/MainWindow.xaml",
+    "src/Toolbox.App/MainWindow.xaml.cs",
+    "src/Toolbox.App/Services/ToolboxTrayIcon.cs",
+    "src/Toolbox.App/Toolbox.App.csproj",
+    "publish-toolbox.ps1"
+  ],
+  "preserve": [
+    "ReminderNotes entries, reminder scheduling, desktop-card behavior and external commands",
+    "LightPet character packs, animation state machine, interaction behavior, size and placement settings",
+    "MU Desk existing seven module behaviors and settings migration"
+  ],
+  "verification": [
+    "All Toolbox, LightPet, ReminderNotes, MouseRing and DesktopOrganizer builds/tests pass",
+    "Published MU Desk shows eight modules and a running Desktop Companion card",
+    "Exactly one ordinary MU Desk tray icon remains while both worker processes run",
+    "Desktop Companion show/hide, settings and enable/disable work from the homepage and tray",
+    "Reminder Notes opens and schedules normally without its own hosted tray icon",
+    "Exiting MU Desk ends both hosted workers; standalone compatibility launches retain their own tray"
+  ]
+}

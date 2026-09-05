@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/LightPet.Core/LightPet.Core.csproj" />
+  <Project Path="src/LightPet.App/LightPet.App.csproj" />
+  <Project Path="src/PersonalTools.Core/PersonalTools.Core.csproj" />
+  <Project Path="src/PersonalTools.App/PersonalTools.App.csproj" />
+  <Project Path="src/PersonalTools.Tests/PersonalTools.Tests.csproj" />
+  <Project Path="src/LightPet.Tests/LightPet.Tests.csproj" />
+</Solution>

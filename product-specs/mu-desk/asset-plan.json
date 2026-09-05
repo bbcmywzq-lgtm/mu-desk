@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "icons": [
+    {
+      "id": "mu-desk",
+      "type": "application-icon",
+      "purpose": "识别 MU Desk 主入口",
+      "placement": "executable, taskbar, tray, about",
+      "surface_profile": "light-outlined",
+      "fallback": "code-native MU tile mark",
+      "sizes": [16, 20, 24, 32, 40, 48, 64, 128, 256, 512],
+      "state": "integrated",
+      "review_state": "approved-v3-integrated",
+      "paths": [
+        "concepts/icon-family-direction.png",
+        "../../artifacts/mu-desk-icons-concept-v1/icons/master/mu-desk.png",
+        "../../artifacts/mu-desk-app-icon-module-dock-concepts-v2/preview/taskbar-24px-comparison.png",
+        "../../artifacts/mu-desk-app-icon-v3/manifest.json",
+        "../../artifacts/mu-desk-app-icon-v3/qa-report.json",
+        "../../artifacts/mu-desk-app-icon-v3/qa-platform-override.md",
+        "../../artifacts/mu-desk-app-icon-v3/preview/live-taskbar-strip.png",
+        "../../artifacts/mu-desk-app-icon-v3/mu-desk.ico"
+      ],
+      "replacement_brief": "app-icon-redesign-brief.md",
+      "selected_replacement": "mu-desk-v3-direction"
+    },
+    {
+      "id": "mu-desk-redesign-concepts-v1",
+      "type": "application-icon-concept-set",
+      "purpose": "比较新的主图标母方向并在 24 px 下验证轮廓",
+      "placement": "Visual System correction review only",
+      "surface_profile": "light-outlined",
+      "fallback": "continue using the currently integrated v2 icon until a replacement is authorized",
+      "sizes": [16, 20, 24, 32, 48, 64, 128, 256],
+      "state": "concept",
+      "paths": [
+        "app-icon-redesign-brief.md",
+        "../../artifacts/mu-desk-app-icon-redesign-concepts-v1/manifest.json",
+        "../../artifacts/mu-desk-app-icon-redesign-concepts-v1/qa-report.json",
+        "../../artifacts/mu-desk-app-icon-redesign-concepts-v1/preview/contact-sheet.png"
+      ]
+    },
+    {
+      "id": "mu-desk-module-dock-concepts-v2",
+      "type": "application-icon-concept-set",
+      "purpose": "比较已选 Module Dock 母方向内的三种任务栏轮廓",
+      "placement": "Visual System correction review only",
+      "surface_profile": "light-outlined",
+      "fallback": "continue using the currently integrated v2 icon until a replacement is authorized",
+      "sizes": [16, 20, 24, 32, 40, 48, 64, 128, 256],
+      "state": "concept",
+      "paths": [
+        "app-icon-redesign-brief.md",
+        "../../artifacts/mu-desk-app-icon-module-dock-concepts-v2/manifest.json",
+        "../../artifacts/mu-desk-app-icon-module-dock-concepts-v2/qa-report.json",
+        "../../artifacts/mu-desk-app-icon-module-dock-concepts-v2/preview/contact-sheet.png",
+        "../../artifacts/mu-desk-app-icon-module-dock-concepts-v2/preview/taskbar-24px-comparison.png"
+      ]
+    },
+    {
+      "id": "mu-desk-v3-direction",
+      "type": "application-icon-direction",
+      "purpose": "作为 MU Desk 新主图标的已选视觉方向，表达多个工具由一个统一入口承载",
+      "placement": "executable, taskbar, tray, alt-tab, about",
+      "surface_profile": "light-outlined",
+      "fallback": "code-native MU tile mark",
+      "sizes": [16, 20, 24, 32, 40, 48, 64, 128, 256, 512],
+      "state": "integrated",
+      "selected_variant": "dock-solid-tile",
+      "paths": [
+        "app-icon-redesign-brief.md",
+        "../../artifacts/mu-desk-app-icon-module-dock-concepts-v2/manifest.json",
+        "../../artifacts/mu-desk-app-icon-module-dock-concepts-v2/preview/taskbar-24px-comparison.png",
+        "../../artifacts/mu-desk-app-icon-v3/manifest.json",
+        "../../artifacts/mu-desk-app-icon-v3/qa-report.json",
+        "../../artifacts/mu-desk-app-icon-v3/mu-desk.ico"
+      ]
+    },
+    {
+      "id": "desktop-organizer",
+      "type": "module-icon",
+      "purpose": "识别桌面整理模块",
+      "placement": "home module card, navigation, settings",
+      "surface_profile": "light-outlined",
+      "fallback": "code-native grid icon",
+      "sizes": [24, 32, 64, 128, 256],
+      "state": "integrated",
+      "review_state": "direct-sync-integrated",
+      "paths": [
+        "concepts/icon-family-direction.png",
+        "../../src/Toolbox.App/MainWindow.xaml",
+        "../../artifacts/mu-desk-visual-sync/home-printwindow.png"
+      ]
+    },
+    {
+      "id": "quick-ring",
+      "type": "module-icon",
+      "purpose": "识别快捷轮盘模块",
+      "placement": "home module card, navigation, settings",
+      "surface_profile": "light-outlined",
+      "fallback": "code-native radial ring icon",
+      "sizes": [24, 32, 64, 128, 256],
+      "state": "integrated",
+      "review_state": "direct-sync-integrated",
+      "paths": [
+        "concepts/icon-family-direction.png",
+        "../../src/Toolbox.App/MainWindow.xaml",
+        "../../artifacts/mu-desk-visual-sync/home-printwindow.png"
+      ]
+    },
+    {
+      "id": "desktop-companion",
+      "type": "module-icon",
+      "purpose": "识别桌面伙伴模块",
+      "placement": "home module card, navigation, settings",
+      "surface_profile": "light-outlined",
+      "fallback": "code-native companion silhouette",
+      "sizes": [24, 32, 64, 128, 256],
+      "state": "integrated",
+      "review_state": "approved-character-led-companion-asset",
+      "paths": [
+        "../../src/LightPet.App/Assets/LightPet-icon-source.png",
+        "../../src/LightPet.App/Assets/LightPet.ico",
+        "../../src/Toolbox.App/MainWindow.xaml"
+      ]
+    },
+    {
+      "id": "cursor-gallery",
+      "type": "module-icon",
+      "purpose": "识别光标画廊模块",
+      "placement": "home module card, tray entry, gallery window",
+      "surface_profile": "light-outlined",
+      "fallback": "code-native cursor and swatch icon",
+      "sizes": [16, 20, 24, 32, 64, 128, 256],
+      "state": "integrated",
+      "review_state": "code-native-optically-normalized",
+      "paths": [
+        "modules/cursor-gallery/visual-system.md",
+        "../../artifacts/mu-desk-icons-cursor-gallery-v1/manifest.json",
+        "../../artifacts/mu-desk-icons-cursor-gallery-v1/qa-report.json",
+        "../../src/Toolbox.App/Assets/CursorGallery/cursor-gallery-64.png",
+        "../../src/Toolbox.App/Styles/MuProductTheme.xaml"
+      ]
+    },
+    {
+      "id": "cisp-question-bank",
+      "type": "module-icon",
+      "purpose": "识别 CISP 题库模块并与 MU Desk 主窗口任务栏按钮区分",
+      "placement": "home module card, question bank window title bar, taskbar",
+      "surface_profile": "light-outlined",
+      "fallback": "code-native C? document icon",
+      "sizes": [16, 20, 24, 32, 64],
+      "state": "integrated",
+      "review_state": "code-native-optically-compensated",
+      "paths": [
+        "../../src/Toolbox.App/MainWindow.xaml",
+        "../../src/Toolbox.App/Views/CispQuestionBankWindow.xaml",
+        "../../src/Toolbox.App/Styles/MuProductTheme.xaml"
+      ]
+    },
+    {
+      "id": "effect-capture",
+      "type": "module-icon",
+      "purpose": "识别动态拾取模块并表达小范围动态采集",
+      "placement": "home module card, quick-ring action, capture window, completion panel",
+      "surface_profile": "light-outlined and dark-translucent",
+      "fallback": "code-native selection corners and stacked frames icon",
+      "sizes": [16, 20, 24, 32, 64, 128, 256],
+      "state": "integrated",
+      "review_state": "code-native-optically-normalized",
+      "paths": [
+        "modules/effect-capture/visual-system.md",
+        "../../artifacts/effect-capture-icons/manifest.json",
+        "../../artifacts/effect-capture-icons/qa-report.json",
+        "../../artifacts/effect-capture-icons/preview/contact-sheet.png",
+        "../../src/Toolbox.App/Assets/EffectCapture/effect-capture-64.png",
+        "../../src/Toolbox.App/Styles/MuProductTheme.xaml"
+      ]
+    },
+    {
+      "id": "file-shelf",
+      "type": "module-icon",
+      "purpose": "识别临时货架模块并表达文件路径的短暂中转",
+      "placement": "home module card, collapsed edge tab, expanded shelf",
+      "surface_profile": "light-outlined and dark-translucent",
+      "fallback": "code-native shelf with two file tabs",
+      "sizes": [16, 20, 24, 32, 64, 128, 256],
+      "state": "integrated",
+      "review_state": "approved-generated-and-code-native-optically-normalized",
+      "paths": [
+        "modules/file-shelf/visual-system.md",
+        "../../artifacts/file-shelf-icons-v1/manifest.json",
+        "../../artifacts/file-shelf-icons-v1/qa-report.json",
+        "../../artifacts/file-shelf-icons-v1/preview/contact-sheet.png",
+        "../../src/Toolbox.App/Assets/FileShelf/file-shelf-64.png",
+        "../../src/Toolbox.App/Styles/MuProductTheme.xaml"
+      ]
+    },
+    {
+      "id": "mujun-cue",
+      "type": "module-icon",
+      "purpose": "识别 Mujun Cue 屏幕演示子软件",
+      "placement": "home module card, Cue toolbar, Cue settings",
+      "surface_profile": "light-outlined and dark-translucent",
+      "fallback": "code-native outlined screen with violet focus corners and pointer",
+      "sizes": [16, 20, 24, 32, 64, 128, 256],
+      "state": "approved",
+      "review_state": "code-native-fallback-authorized-for-phase-1",
+      "paths": [
+        "modules/mujun-cue/visual-system.md",
+        "../../src/Toolbox.App/Styles/MuProductTheme.xaml"
+      ]
+    },
+    {
+      "id": "mu-system-icons",
+      "type": "system-icon-family",
+      "purpose": "统一首页、外观、设置、本地隐私和后台启动入口",
+      "placement": "navigation, settings categories, status",
+      "surface_profile": "light-outlined",
+      "fallback": "code-native rounded line icons",
+      "sizes": [16, 20, 24, 32, 64],
+      "state": "concept",
+      "paths": ["concepts/icon-family-direction.png"]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "home-welcome-character",
+      "type": "product-illustration",
+      "purpose": "在首页欢迎区提供轻量角色识别和亲和感",
+      "placement": "home featured module region",
+      "surface_profile": "light-outlined",
+      "fallback": "collapse artwork region and retain module copy",
+      "aspect_ratio": "3:4 character spot",
+      "state": "planned",
+      "paths": ["concepts/character-reference.png", "concepts/ui-direction.png"]
+    }
+  ],
+  "screenshots": [
+    {
+      "id": "home-ui-direction",
+      "type": "visual-direction",
+      "purpose": "验证角色、卡片、描边、色板与信息密度能否共存",
+      "placement": "Visual System gate review",
+      "surface_profile": "light-outlined",
+      "fallback": "written visual contract",
+      "state": "concept",
+      "paths": ["concepts/ui-direction.png"]
+    }
+  ],
+  "illustration_skip_reason": "",
+  "notes": [
+    "MU Desk 应用主图标 v2 已被实机任务栏复核否决；A3/完整应用块已完成纯色生产、接入、构建、测试和本地发布",
+    "桌面整理与快捷轮盘已按概念方向收敛为首页代码原生正式图标；桌面伙伴使用已批准的角色专属图标并接入首页模块卡片",
+    "临时货架正式模块图标已按接受方向生成、完成 16–256 px 拆分与 QA，并接入首页和贴边标签",
+    "独立任务窗口使用自己的模块图标；MU Desk 主图标只用于产品外壳",
+    "用户实机指出新 CISP 图标在 Windows 小尺寸下留白过宽，并指出首页模块图标真实主体比例不一致；四向轮盘与桌面整理被确认为基准，动态拾取、CISP、光标画廊和临时货架已改为同一套 34 px 代码原生深描边主体"
+  ]
+}

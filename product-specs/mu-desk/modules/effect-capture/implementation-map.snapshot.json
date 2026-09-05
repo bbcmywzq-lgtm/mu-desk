@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "scope": "Implement only the accepted MU Desk Dynamic Capture (effect-capture) module, its native short-region capture pipeline, local AI context package, explicit Codex send action, and the minimum host/Quick Ring/settings/tray integration required by the accepted contracts.",
+  "source_contracts": [
+    "modules/effect-capture/definition.md",
+    "modules/effect-capture/visual-system.md",
+    "modules/effect-capture/system-packaging.md"
+  ],
+  "owned_projects": [
+    "src/Toolbox.App",
+    "src/Toolbox.Core",
+    "src/Toolbox.Tests",
+    "src/MouseRing.App",
+    "src/MouseRing.Core",
+    "src/MouseRing.Tests"
+  ],
+  "owned_files": [
+    {
+      "path": "src/Toolbox.Core/EffectCaptureSettings.cs",
+      "change": "New pure settings model for duration, countdown, output root, optional global hotkey, and Quick Ring assignment defaults."
+    },
+    {
+      "path": "src/Toolbox.Core/EffectCapturePackage.cs",
+      "change": "New package and send-state records with validation, relative paths, timestamps, frame metadata, and no credential fields."
+    },
+    {
+      "path": "src/Toolbox.Core/EffectKeyFrameSelector.cs",
+      "change": "New deterministic selector preserving first/last frames and motion-change peaks while returning 8–16 timestamped frames."
+    },
+    {
+      "path": "src/Toolbox.Core/CodexJsonRpc.cs",
+      "change": "New protocol DTOs and newline-delimited JSON-RPC parsing independent from process I/O."
+    },
+    {
+      "path": "src/Toolbox.Core/ToolboxSettings.cs",
+      "change": "Add one nested Dynamic Capture settings section without changing existing defaults for startup, Quick Ring, or Desktop Organizer."
+    },
+    {
+      "path": "src/Toolbox.App/Styles/MuProductTheme.xaml",
+      "change": "Add only keyed capture overlay, HUD, completion, progress, and send-state resources using the accepted inherited tokens."
+    },
+    {
+      "path": "src/Toolbox.App/Modules/EffectCaptureModule.cs",
+      "change": "New on-demand IToolModule coordinator enforcing one active capture, explicit state transitions, cancellation, host errors, and completion-window reuse."
+    },
+    {
+      "path": "src/Toolbox.App/Services/ScreenCaptureService.cs",
+      "change": "New Windows.Graphics.Capture/Direct3D 11 region frame source with per-monitor DPI conversion, optional cursor capture, and overlay exclusion."
+    },
+    {
+      "path": "src/Toolbox.App/Services/MediaFoundationMp4Encoder.cs",
+      "change": "New native H.264 MP4 encoder for short BGRA frames; handle even encoded dimensions while retaining the exact logical crop in metadata and PNG frames."
+    },
+    {
+      "path": "src/Toolbox.App/Services/CapturePackageService.cs",
+      "change": "New atomic temp-to-final package writer for MP4, PNG key frames, contact sheet, effect.md, and send-state.json."
+    },
+    {
+      "path": "src/Toolbox.App/Services/CodexExecutableLocator.cs",
+      "change": "Discover and version-check an official local Codex executable without bundling or downloading one."
+    },
+    {
+      "path": "src/Toolbox.App/Services/CodexAppServerClient.cs",
+      "change": "Own the stdio app-server process, initialize handshake, account/read and managed login, thread/start, turn/start with text/localImage inputs, streaming, cancellation, and sanitized errors."
+    },
+    {
+      "path": "src/Toolbox.App/Services/CodexBridgeService.cs",
+      "change": "Map a validated package to one new read-only Codex task, persist identifiers before success, and resume/check known sends instead of blindly duplicating tasks."
+    },
+    {
+      "path": "src/Toolbox.App/Services/GlobalHotkeyService.cs",
+      "change": "Register only a user-selected non-conflicting hotkey; default is unassigned and failure leaves direct entries usable."
+    },
+    {
+      "path": "src/Toolbox.App/Native/CaptureInterop.cs",
+      "change": "Minimal Windows SDK interop for Direct3D device/surface access, Media Foundation sink writing, capture exclusion, and safe COM/native handle lifetime; no broad native wrapper dependency."
+    },
+    {
+      "path": "src/Toolbox.App/Views/EffectRegionSelectionWindow.xaml",
+      "change": "New per-monitor dark-translucent selection overlay with exact cutout, handles, dimensions, keyboard cancellation, and outside-region control placement."
+    },
+    {
+      "path": "src/Toolbox.App/Views/EffectRegionSelectionWindow.xaml.cs",
+      "change": "Own physical/logical coordinate mapping, one-monitor selection constraint, drag/resize, countdown, and exclusion of all overlay windows from encoded pixels."
+    },
+    {
+      "path": "src/Toolbox.App/Views/EffectCaptureHudWindow.xaml",
+      "change": "New outside-region recording HUD with text/dot/timer, Stop, Cancel, scaling, and edge flipping."
+    },
+    {
+      "path": "src/Toolbox.App/Views/EffectCaptureHudWindow.xaml.cs",
+      "change": "Update real elapsed/total time, route stop/cancel, and preserve no-HUD-inside-capture geometry."
+    },
+    {
+      "path": "src/Toolbox.App/Views/EffectCaptureWindow.xaml",
+      "change": "New light-outlined processing/completion surface with still preview, ordered timestamped key-frame strip, consent summary, Send to Codex primary action, folder, retry, and re-record actions."
+    },
+    {
+      "path": "src/Toolbox.App/Views/EffectCaptureWindow.xaml.cs",
+      "change": "Drive processing, preview, sign-in, send, success/failure, retry, reduced motion, focus, and safe-close states."
+    },
+    {
+      "path": "src/Toolbox.App/Views/ToolboxSettingsWindow.xaml",
+      "change": "New MU Desk-owned settings surface containing Dynamic Capture duration, countdown, output location, optional hotkey, and Quick Ring assignment; it is not a separately branded module window."
+    },
+    {
+      "path": "src/Toolbox.App/Views/ToolboxSettingsWindow.xaml.cs",
+      "change": "Validate output location and hotkey conflicts, save atomically through the shared store, and expose reset without deleting captures or Codex auth."
+    },
+    {
+      "path": "src/Toolbox.App/Services/ToolboxSettingsStore.cs",
+      "change": "Move the shared target to %LocalAppData%/MU Desk/settings.json through a copy-only atomic migration from %LocalAppData%/PersonalToolbox/settings.json; never delete the legacy file."
+    },
+    {
+      "path": "src/Toolbox.App/Services/ToolboxTrayIcon.cs",
+      "change": "Add one Dynamic Capture command and hidden-window Codex completion/failure notifications without a second tray icon."
+    },
+    {
+      "path": "src/Toolbox.App/App.xaml.cs",
+      "change": "Construct and wire EffectCaptureModule, host entries, settings, shutdown confirmation, errors, and in-flight Codex lifecycle while preserving single-instance behavior."
+    },
+    {
+      "path": "src/Toolbox.App/MainWindow.xaml",
+      "change": "Add the accepted Dynamic Capture card and MU Desk settings entry without restyling or reordering unrelated module behavior."
+    },
+    {
+      "path": "src/Toolbox.App/MainWindow.xaml.cs",
+      "change": "Route Start Capture and shared Settings actions and refresh on-demand module state."
+    },
+    {
+      "path": "src/MouseRing.Core/ActionKind.cs",
+      "change": "Add EffectCapture as a hosted-only action value while preserving every existing serialized enum value."
+    },
+    {
+      "path": "src/MouseRing.App/Services/ActionCatalog.cs",
+      "change": "Expose Dynamic Capture only when Mouse Ring is hosted by MU Desk; do not present a broken action in the standalone compatibility app."
+    },
+    {
+      "path": "src/MouseRing.App/Services/ActionExecutor.cs",
+      "change": "Accept a host-provided callback for Dynamic Capture while preserving all existing Windows actions."
+    },
+    {
+      "path": "src/MouseRing.App/MouseRingModule.cs",
+      "change": "Register/invoke the host callback and keep standalone behavior compatible."
+    },
+    {
+      "path": "src/MouseRing.App/Views/SettingsWindow.xaml.cs",
+      "change": "Use the hosted action catalog so Dynamic Capture can be assigned only inside MU Desk."
+    },
+    {
+      "path": "src/MouseRing.App/Views/RadialMenuControl.cs",
+      "change": "Draw the approved code-native selection-corners/frames glyph for the new action."
+    },
+    {
+      "path": "src/Toolbox.App/Assets/EffectCapture",
+      "change": "New approved module icon exports at 16, 20, 24, 32, 64, 128, and 256 px."
+    },
+    {
+      "path": "src/Toolbox.App/Toolbox.App.csproj",
+      "change": "Package Effect Capture icon resources and required Windows interop settings; do not add FFmpeg or a second Codex runtime."
+    },
+    {
+      "path": "src/Toolbox.Tests/Program.cs",
+      "change": "Add deterministic settings migration, key-frame selection, package validation, atomic commit, send-state, JSON-RPC parsing, and sanitized-error tests."
+    },
+    {
+      "path": "src/MouseRing.Tests/Program.cs",
+      "change": "Verify existing enum serialization remains stable and the hosted-only Dynamic Capture action is absent from standalone choices."
+    }
+  ],
+  "technical_route": {
+    "capture": "Windows.Graphics.Capture monitor frames cropped to one selected monitor-local rectangle; Direct3D 11 surfaces with Windows 10 2004+ capture-exclusion for MU overlay/HUD windows.",
+    "video": "Native Media Foundation H.264 MP4 at a nominal cadence suitable for 60 fps short UI motion; no audio and no FFmpeg.",
+    "images": "Exact logical crop PNG frames; representative poster and contact sheet built locally from selected frames.",
+    "key_frames": "First/last plus luminance/edge motion-change peaks with minimum temporal spacing, returning 8–16 ordered timestamps; never discard source.mp4.",
+    "codex": "Official codex app-server stdio JSON-RPC with Codex-managed ChatGPT auth, one new read-only package-scoped thread, then text and localImage turn inputs.",
+    "runtime_weight": "No idle capture worker, encoder, model runtime, FFmpeg bundle, browser engine, database, or independent updater."
+  },
+  "preserve": [
+    "MU Desk remains the single process, user entry, tray, startup item, settings owner, version, About surface, and package.",
+    "Quick Ring, Cursor Gallery, Desktop Organizer, VPet compatibility, single-instance activation, startup behavior, and existing tray actions continue to work.",
+    "Every existing Mouse Ring enum numeric value and saved direction assignment remains compatible.",
+    "Existing Toolbox settings migrate by copy and are not deleted, reset, or silently replaced by defaults.",
+    "No capture, encoder, frame analyzer, or Codex child process exists while Dynamic Capture is idle.",
+    "A failed or cancelled Codex send never deletes or corrupts a completed local package.",
+    "No API key, OAuth token, cookie, captured OCR text, image bytes, or prompt body is written to MU Desk logs or settings."
+  ],
+  "migrations": [
+    "Prefer %LocalAppData%/MU Desk/settings.json when present.",
+    "When the target is absent and %LocalAppData%/PersonalToolbox/settings.json exists, atomically copy it, deserialize with defaults for new Dynamic Capture fields, and leave the source untouched.",
+    "When shared settings migration fails, continue reading the legacy settings without reporting a successful target migration; do not overwrite either file.",
+    "Create the Dynamic Capture output root lazily on the first capture, not at application startup.",
+    "Do not migrate, move, index, or delete arbitrary user video/image folders."
+  ],
+  "implementation_sequence": [
+    "Add pure settings/package/send-state/JSON-RPC/key-frame core models and deterministic tests, including copy-only shared-settings migration.",
+    "Implement the minimal native capture interop and prove one 2-second monitor-local region can produce ordered BGRA frames without capturing the overlay.",
+    "Implement Media Foundation MP4 encoding plus PNG/key-frame/contact-sheet/effect.md atomic package creation and validate 2, 5, and 7 second packages.",
+    "Build the selection overlay, countdown, recording HUD, processing/completion window, state machine, cancellation, DPI handling, keyboard flow, and reduced-motion behavior.",
+    "Add EffectCaptureModule and wire the MU Desk card, shared settings surface, tray entry, optional global hotkey, shutdown confirmation, and unified errors.",
+    "Extend hosted Mouse Ring with the Dynamic Capture action while keeping standalone catalogs and existing serialized assignments compatible.",
+    "Implement Codex executable discovery and the JSON-RPC app-server client against a deterministic fake process before using a real account.",
+    "Implement managed login, package-scoped read-only thread creation, text/localImage turn submission, streaming, send-state persistence, retry, and hidden-window notifications.",
+    "Produce the approved module icon family, run small-size QA, and integrate it only into accepted placements.",
+    "Run clean build/tests, package/publish checks, visual/accessibility checks, controlled native capture checks, one explicit real Codex send, recovery checks, and record evidence in acceptance.md."
+  ],
+  "risks": [
+    {
+      "risk": "Overlay or HUD pixels could contaminate the selected recording.",
+      "mitigation": "Set capture exclusion on every MU overlay/HUD window, place controls outside the logical crop, test a high-contrast HUD over the target, and fail the acceptance check if any control appears in MP4 or PNG frames."
+    },
+    {
+      "risk": "WPF logical coordinates, per-monitor DPI, negative desktop coordinates, and GPU pixel coordinates can disagree.",
+      "mitigation": "Keep the selected rectangle on one originating monitor, convert through that monitor's DPI transform once, store physical coordinates, and test 100%, 150%, and 200% scaling including a monitor left of the primary display."
+    },
+    {
+      "risk": "H.264 encoders require even dimensions while the user can select an odd-sized region.",
+      "mitigation": "Keep PNGs and manifest at exact logical size, pad only the encoded edge to even dimensions, and record logical and encoded dimensions separately."
+    },
+    {
+      "risk": "A very fast overshoot or easing turn could be absent from uniformly sampled key frames.",
+      "mitigation": "Capture at high cadence, score consecutive-frame change, preserve local motion peaks plus endpoints, enforce time spacing only after peak ranking, and always retain source.mp4."
+    },
+    {
+      "risk": "GPU/Media Foundation resource leaks could keep the desktop or encoder busy after closing.",
+      "mitigation": "Use explicit disposable ownership, cancellation-safe finally blocks, frame-pool shutdown before device disposal, and process/resource counts in repeated-capture acceptance tests."
+    },
+    {
+      "risk": "The installed Codex app-server protocol or executable location may differ from the tested version.",
+      "mitigation": "Discover/version-check at send time, implement only the documented stable stdio surface, parse unknown notifications defensively, and leave local capture fully usable when incompatible."
+    },
+    {
+      "risk": "Child-process stdout/stderr backpressure or a partial JSON line could deadlock the UI.",
+      "mitigation": "Use asynchronous independent readers, bounded event dispatch, newline framing with partial-line buffering, cancellation timeouts, and a fake noisy app-server test."
+    },
+    {
+      "risk": "A timeout after thread creation could create duplicate Codex tasks on retry.",
+      "mitigation": "Persist thread and turn identifiers immediately, distinguish unknown/accepted/completed states, and resume/check known identifiers before allowing a new send."
+    },
+    {
+      "risk": "Captured frames may contain sensitive information.",
+      "mitigation": "Keep capture local until an explicit click, show exact send count and disclosure, allow folder inspection, restrict the Codex task to the package, and exclude media/prompt content from logs."
+    },
+    {
+      "risk": "Shared settings migration or Quick Ring changes could regress existing modules.",
+      "mitigation": "Copy rather than move, preserve enum numeric values, default new fields during deserialization, test legacy fixtures, and run all Toolbox/MouseRing/DesktopOrganizer suites."
+    }
+  ],
+  "verification": {
+    "build": [
+      ".\\build-toolbox.ps1",
+      ".\\publish-toolbox.ps1",
+      "Release build and all Toolbox, MouseRing, and DesktopOrganizer tests pass from a clean process start.",
+      "Published output contains MU Desk and approved assets but no FFmpeg executable, API key, auth token, or standalone Dynamic Capture executable."
+    ],
+    "core_tests": [
+      "Legacy PersonalToolbox settings copy atomically to MU Desk and retain all existing values; source remains untouched.",
+      "Malformed or blocked settings migration reports a real error and does not overwrite either file.",
+      "Key-frame selection returns ordered 8–16 frames, always includes first/last, retains a synthetic overshoot peak, and behaves deterministically.",
+      "Package validation rejects missing MP4, missing frame, unsafe relative paths, wrong timestamps, and incomplete temp directories.",
+      "Atomic package commit leaves no successful-looking final directory on simulated write failure.",
+      "Codex JSON-RPC parser handles fragmented lines, unknown notifications, error responses, login events, turn identifiers, completion, cancellation, and malformed JSON.",
+      "Known thread state prevents duplicate creation after a simulated response timeout.",
+      "Sanitized diagnostics omit prompts, image bytes, absolute captured titles, and credential-shaped values.",
+      "All existing Mouse Ring action numeric values remain unchanged and Dynamic Capture is offered only in hosted mode."
+    ],
+    "capture_flow": [
+      "Launch from the MU Desk card, tray, and assigned Quick Ring direction; all activate one capture operation.",
+      "Select a 320x180 region on each available monitor at 100%, 150%, and 200% scaling; verify exact physical crop and no cross-monitor coordinate drift.",
+      "Record 2, 5, and 7 second samples; verify Stop, Cancel, Esc, countdown, timer, re-record, and close behavior.",
+      "Use a high-contrast overlay/HUD over the target and verify neither appears in MP4, PNG frames, poster, or contact sheet.",
+      "Capture a 100–200 ms scale/opacity overshoot at high cadence and verify start, motion peak, overshoot, settle, and end frames remain ordered with timestamps.",
+      "Select odd width/height and verify PNG dimensions are exact, MP4 plays, and logical versus encoded dimensions are recorded.",
+      "Repeat capture/cancel/send cycles and verify no persistent GPU, encoder, app-server, overlay, or child-process leak remains."
+    ],
+    "package_and_privacy": [
+      "A completed folder contains playable source.mp4, contact-sheet.png, 8–16 valid PNG frames, effect.md, and send-state.json.",
+      "Before Send, monitor network/process behavior and verify no Codex process or network submission occurs.",
+      "Completion copy shows the real frame count and states that MP4 remains local.",
+      "Changing output root affects new packages only; reset preserves all completed packages.",
+      "Temporary directories older than 24 hours are cleaned only when positively identified as incomplete module workspaces.",
+      "Logs contain sanitized stage metadata and never include captured content or credentials."
+    ],
+    "codex_integration": [
+      "Run against a fake app-server that exercises initialize, initialized, account/read, managed-login events, thread/start, turn/start with text/localImage, streaming, success, failure, cancellation, and timeout.",
+      "With Codex absent or incompatible, local capture remains usable and Send shows a concrete unavailable/version error.",
+      "With authentication absent, Connect Codex starts the managed flow and cancelled login sends nothing.",
+      "Perform one explicit real send using a dedicated non-sensitive test package; verify a new thread and first turn identifiers are stored and the submitted input contains the prompt plus ordered localImage frames.",
+      "Verify source.mp4 is not attached as an image input and no unrelated workspace is writable by the new task.",
+      "Close the completion window during the controlled send; verify the task continues, one tray result appears, and retry does not create a known duplicate."
+    ],
+    "accessibility_and_visual": [
+      "Inspect light completion/settings surfaces and dark selection/HUD surfaces against the accepted tokens and no-override contract.",
+      "Keyboard can cancel selection, activate duration/Start/Stop/Send/folder/retry actions, traverse key frames, and retain visible focus.",
+      "Selection, recording, sending, success, and failure are distinguishable without color.",
+      "At 200% scaling, the HUD flips instead of clipping, the completion panel reflows without page-level horizontal scrolling, and text remains readable.",
+      "Reduced motion removes eased countdown/preview transitions and the clip does not autoplay indefinitely.",
+      "The final icon remains legible at 16, 20, 24, and 32 px and uses the accepted selection-corners/frames metaphor."
+    ],
+    "system_and_recovery": [
+      "There is one MU Desk process, tray icon, startup entry, settings owner, version, and installer artifact.",
+      "Idle MU Desk has no capture, encoder, analyzer, Codex app-server, or Dynamic Capture child process.",
+      "A second invocation activates the existing selection/recording/processing surface instead of creating a second operation.",
+      "Exit during recording or send requires confirmation; confirmed exit preserves a completed local package and releases native/process resources.",
+      "Capture failure, disk-full simulation, missing frame, login failure, service error, and rate-limit error remain visible and never display success.",
+      "Quick Ring, Cursor Gallery, Desktop Organizer, startup, single-instance activation, tray pause/exit, and legacy settings still pass representative smoke paths."
+    ]
+  },
+  "rollback_and_recovery": [
+    "All new user data is isolated under the accepted Effect Capture root and no existing capture or legacy settings file is deleted.",
+    "If native capture initialization fails, disable only the active capture attempt, keep MU Desk and every other module operational, and expose the actual error.",
+    "If Codex integration fails, keep Send unavailable/retryable without disabling recording or local packaging.",
+    "If shared settings migration fails, use the readable legacy settings for the session and do not claim the MU Desk target was established.",
+    "Removing the new module wiring from a future build leaves completed package folders readable as ordinary MP4, PNG, and Markdown files."
+  ]
+}

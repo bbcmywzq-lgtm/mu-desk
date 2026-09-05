@@ -1,0 +1,151 @@
+<Window x:Class="DesktopOrganizer.Views.SmartZoneEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="智能文件夹分区"
+        Width="640"
+        Height="620"
+        MinWidth="580"
+        MinHeight="560"
+        WindowStartupLocation="CenterOwner"
+        Background="#FF101721"
+        Foreground="#FFF5F7FA"
+        FontFamily="Segoe UI Variable Text">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Background" Value="#1AFFFFFF" />
+            <Setter Property="BorderBrush" Value="#32FFFFFF" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="CaretBrush" Value="White" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Padding" Value="8,4" />
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="0,8" />
+            <Setter Property="Foreground" Value="#FFE7ECF3" />
+        </Style>
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Padding" Value="20,9" />
+            <Setter Property="Background" Value="#FF8B7CFF" />
+            <Setter Property="BorderBrush" Value="#70C4BCFF" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Padding" Value="14,8" />
+            <Setter Property="Background" Value="#16FFFFFF" />
+            <Setter Property="BorderBrush" Value="#32FFFFFF" />
+            <Setter Property="Foreground" Value="#FFE7ECF3" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="84" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="72" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="#18FFFFFF" BorderThickness="0,0,0,1">
+            <StackPanel Margin="28,17">
+                <TextBlock FontSize="21" FontWeight="SemiBold" Text="智能文件夹分区" />
+                <TextBlock Margin="0,5,0,0"
+                           Foreground="#FFAAB5C4"
+                           FontSize="12"
+                           Text="只建立本地视图；修改筛选不会移动任何真实文件" />
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="28,22">
+                <TextBlock FontSize="12" Foreground="#FFB8C3D1" Text="分区名称" />
+                <TextBox x:Name="ZoneNameTextBox" Margin="0,7,0,18" />
+
+                <TextBlock FontSize="12" Foreground="#FFB8C3D1" Text="来源文件夹（仅支持本机固定磁盘）" />
+                <Grid Margin="0,7,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="92" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="SourcePathTextBox"
+                             Grid.Column="0"
+                             Margin="0,0,8,0"
+                             TextChanged="OnConfigurationChanged" />
+                    <Button Grid.Column="1"
+                            Style="{StaticResource SecondaryButton}"
+                            Content="选择…"
+                            Click="OnBrowseClick" />
+                </Grid>
+                <CheckBox x:Name="IncludeSubfoldersCheckBox"
+                          Content="包含子文件夹"
+                          Checked="OnConfigurationChanged"
+                          Unchecked="OnConfigurationChanged" />
+                <CheckBox x:Name="ShowHiddenFilesCheckBox"
+                          Content="显示隐藏文件和系统文件"
+                          Checked="OnConfigurationChanged"
+                          Unchecked="OnConfigurationChanged" />
+
+                <Grid Margin="0,16,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,14,0">
+                        <TextBlock FontSize="12" Foreground="#FFB8C3D1" Text="类型预设" />
+                        <ComboBox x:Name="PresetComboBox"
+                                  Margin="0,7,0,0"
+                                  DisplayMemberPath="Name"
+                                  SelectionChanged="OnPresetChanged" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock FontSize="12" Foreground="#FFB8C3D1" Text="扩展名（逗号或空格分隔；留空显示全部）" />
+                        <TextBox x:Name="ExtensionsTextBox"
+                                 Margin="0,7,0,0"
+                                 TextChanged="OnConfigurationChanged" />
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Margin="0,18,0,0" FontSize="12" Foreground="#FFB8C3D1" Text="默认排序" />
+                <ComboBox x:Name="SortComboBox"
+                          Width="210"
+                          Margin="0,7,0,0"
+                          HorizontalAlignment="Left"
+                          DisplayMemberPath="Name" />
+
+                <Border Margin="0,22,0,0"
+                        Padding="16"
+                        Background="#101C2A3B"
+                        BorderBrush="#3C8B7CFF"
+                        BorderThickness="1"
+                        CornerRadius="12">
+                    <StackPanel>
+                        <TextBlock FontSize="12" FontWeight="SemiBold" Text="实时预览" />
+                        <TextBlock x:Name="PreviewText"
+                                   Margin="0,7,0,0"
+                                   Foreground="#FFAEC0D3"
+                                   FontSize="12"
+                                   Text="请选择来源文件夹" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="2" BorderBrush="#18FFFFFF" BorderThickness="0,1,0,0">
+            <StackPanel Margin="28,16" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Margin="0,0,10,0"
+                        Style="{StaticResource SecondaryButton}"
+                        Content="取消"
+                        IsCancel="True" />
+                <Button Style="{StaticResource PrimaryButton}"
+                        Content="保存分区"
+                        IsDefault="True"
+                        Click="OnSaveClick" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

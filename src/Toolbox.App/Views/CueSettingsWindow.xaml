@@ -1,0 +1,55 @@
+<Window x:Class="PersonalToolbox.Views.CueSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cue · 屏幕讲解 · MU Desk" Width="560" Height="650" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" Background="{StaticResource MuCanvasBrush}" FontFamily="Microsoft YaHei UI">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock FontSize="25" FontWeight="SemiBold" Foreground="{StaticResource MuInkBrush}" Text="Cue · 屏幕讲解" />
+            <TextBlock Margin="0,6,0,18" Foreground="{StaticResource MuMutedBrush}" Text="屏幕演示与实时讲解工具" />
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Border Style="{StaticResource MuPanel}" Padding="18" Margin="0,0,0,14">
+                    <StackPanel>
+                        <CheckBox x:Name="FocusEnabled" Content="启用 Caps Lock 按住聚焦" />
+                        <TextBlock Margin="0,14,0,4" Text="默认倍率" />
+                        <Slider x:Name="ZoomSlider" Minimum="1.25" Maximum="5" TickFrequency="0.25" IsSnapToTickEnabled="True" />
+                        <TextBlock x:Name="ZoomValue" HorizontalAlignment="Right" Foreground="{StaticResource MuAccentBrush}" />
+                        <TextBlock Margin="0,12,0,4" Text="长按判定（毫秒）" />
+                        <Slider x:Name="HoldSlider" Minimum="80" Maximum="500" TickFrequency="10" IsSnapToTickEnabled="True" />
+                        <TextBlock x:Name="HoldValue" HorizontalAlignment="Right" Foreground="{StaticResource MuMutedBrush}" />
+                        <TextBlock Margin="0,12,0,4" Text="聚焦过渡（毫秒，推荐 180–260）" />
+                        <Slider x:Name="AnimationSlider" Minimum="0" Maximum="500" TickFrequency="10" IsSnapToTickEnabled="True" />
+                        <TextBlock x:Name="AnimationValue" HorizontalAlignment="Right" Foreground="{StaticResource MuMutedBrush}" />
+                        <CheckBox x:Name="FollowCursor" Margin="0,12,0,0" Content="聚焦时使用死区平滑跟随鼠标" />
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource MuPanel}" Padding="18" Margin="0,0,0,14">
+                    <StackPanel>
+                        <TextBlock FontWeight="SemiBold" Text="聚光与局部放大" />
+                        <TextBlock Margin="0,12,0,4" Text="聚光半径" />
+                        <Slider x:Name="SpotlightRadius" Minimum="60" Maximum="500" />
+                        <TextBlock Margin="0,12,0,4" Text="放大镜倍率" />
+                        <Slider x:Name="MagnifierZoom" Minimum="1.25" Maximum="5" TickFrequency="0.25" IsSnapToTickEnabled="True" />
+                        <TextBlock Margin="0,12,0,4" Text="放大镜范围" />
+                        <Slider x:Name="MagnifierRadius" Minimum="60" Maximum="480" TickFrequency="10" IsSnapToTickEnabled="True" />
+                        <TextBlock x:Name="MagnifierSizeValue" HorizontalAlignment="Right" Foreground="{StaticResource MuMutedBrush}" />
+                        <TextBlock Margin="0,5,0,0" Text="中心清晰放大，边缘柔和融入桌面，无描边。" Foreground="{StaticResource MuMutedBrush}" />
+                        <CheckBox x:Name="RectSpotlight" Margin="0,12,0,0" Content="聚光灯使用圆角矩形" />
+                        <CheckBox x:Name="RectMagnifier" Margin="0,8,0,0" Content="放大镜使用圆角矩形" />
+                    </StackPanel>
+                </Border>
+                <TextBlock TextWrapping="Wrap" Foreground="{StaticResource MuMutedBrush}"
+                           Text="短按 Caps Lock 仍切换大小写；按住达到阈值后进入聚焦，松开必定复原。Ctrl + Alt + Esc 或连续三次 Esc 可紧急复原。" />
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Margin="0,18,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource MuSecondaryButton}" Content="取消" Click="Cancel_OnClick" />
+            <Button Margin="10,0,0,0" Style="{StaticResource MuPrimaryButton}" Content="应用" Click="Apply_OnClick" />
+        </StackPanel>
+    </Grid>
+</Window>

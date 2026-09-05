@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/MouseRing.Core/MouseRing.Core.csproj" />
+  <Project Path="src/MouseRing.App/MouseRing.App.csproj" />
+  <Project Path="src/MouseRing.Tests/MouseRing.Tests.csproj" />
+</Solution>

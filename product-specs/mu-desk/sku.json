@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "sku_id": "MU-DESK",
+  "family": "MU",
+  "standard_version": "1.0.1",
+  "product": {
+    "name": "MU Desk",
+    "full_name": "Modular Utility Desktop",
+    "descriptor": "统一承载个人桌面工具的本地 Windows 应用",
+    "category": "desktop-utility-suite",
+    "audience": ["个人 Windows 用户"],
+    "promise": "通过一个入口集中管理常用桌面工具",
+    "scope_exclusions": [
+      "云端协作",
+      "跨平台客户端",
+      "为内部模块建立独立系统包装"
+    ]
+  },
+  "topology": {
+    "entry_model": "single-shell",
+    "user_facing_entry": "MU Desk shell",
+    "modules": [
+      {
+        "id": "desktop-organizer",
+        "name": "Mujun Grid",
+        "display_name": "Grid · 桌面整理",
+        "purpose": "整理与管理 Windows 桌面内容和分区",
+        "lifecycle": "active",
+        "surface_profiles": ["light-outlined", "dark-translucent"]
+      },
+      {
+        "id": "quick-ring",
+        "name": "Mujun Orbit",
+        "display_name": "Orbit · 快捷轮盘",
+        "purpose": "通过鼠标手势呼出四向快捷操作轮盘",
+        "lifecycle": "active",
+        "surface_profiles": ["light-outlined", "dark-translucent"]
+      },
+      {
+        "id": "mujun-cue",
+        "name": "Mujun Cue",
+        "display_name": "Cue · 屏幕讲解",
+        "purpose": "为实时屏幕讲解提供指示、聚光、放大、聚焦、标注、截图、画板与计时能力",
+        "lifecycle": "product-definition-pending",
+        "scope_exclusions": [
+          "独立托盘、开机启动项、安装包、更新通道或 About 页面",
+          "云同步、账号、遥测或屏幕内容上传",
+          "首版承诺支持 DRM 内容、独占全屏游戏或高权限窗口",
+          "首阶段实现画板与计时器"
+        ],
+        "surface_profiles": ["light-outlined", "dark-translucent"]
+      },
+      {
+        "id": "cursor-gallery",
+        "name": "Mujun Tip",
+        "display_name": "Tip · 光标装扮",
+        "purpose": "浏览、预览并应用本地 Windows 光标皮肤，或恢复系统默认光标",
+        "lifecycle": "active-on-demand",
+        "scope_exclusions": [
+          "在线皮肤商店",
+          "导入、编辑或删除光标皮肤",
+          "关闭画廊后保留独立后台进程"
+        ],
+        "surface_profiles": ["light-outlined"]
+      },
+      {
+        "id": "desktop-companion",
+        "name": "Mujun Pal",
+        "display_name": "Pal · 桌面伙伴",
+        "purpose": "提供桌面角色陪伴与轻量交互",
+        "lifecycle": "integrated-external-worker",
+        "scope_exclusions": [
+          "独立托盘、开机启动项或普通用户安装入口",
+          "把动画资源和渲染循环载入 MU Desk 主进程"
+        ],
+        "surface_profiles": ["light-outlined", "transparent-companion"]
+      },
+      {
+        "id": "reminder-notes",
+        "name": "Mujun Memo",
+        "display_name": "Memo · 随记提醒",
+        "purpose": "管理本地随记、提醒和桌面便签",
+        "lifecycle": "integrated-external-worker",
+        "scope_exclusions": [
+          "由模块进程建立独立托盘或开机启动项",
+          "云同步与多人协作"
+        ],
+        "surface_profiles": ["light-outlined", "dark-translucent"]
+      },
+      {
+        "id": "effect-capture",
+        "name": "Mujun Clip",
+        "display_name": "Clip · 动态拾取",
+        "purpose": "框选并短录屏幕动态，将难以描述的视觉效果整理成 AI 上下文包并按用户操作发送给 Codex",
+        "lifecycle": "integrated",
+        "scope_exclusions": [
+          "未经用户确认自动上传或自动发送",
+          "完整录屏、剪辑与素材管理",
+          "音频录制",
+          "首版提取网页 DOM、CSS、Canvas 或 WebGL 实现"
+        ],
+        "surface_profiles": ["light-outlined", "dark-translucent"]
+      },
+      {
+        "id": "cisp-question-bank",
+        "name": "CISP 题库",
+        "purpose": "提供 907 道综合练习、2026 最新八套题独立入口、答题反馈和错题本",
+        "lifecycle": "integrated",
+        "scope_exclusions": [
+          "在线考试与题库同步",
+          "账号、排行与多人协作",
+          "独立产品、托盘、开机启动项或安装包"
+        ],
+        "surface_profiles": ["light-outlined"]
+      },
+      {
+        "id": "file-shelf",
+        "name": "Mujun Drop",
+        "display_name": "Drop · 文件暂存",
+        "purpose": "临时搁置跨窗口搬运中的本地文件和文件夹，并从屏幕边缘快速拖出继续使用",
+        "lifecycle": "implementation-authorized",
+        "scope_exclusions": [
+          "复制、移动、删除或上传原始文件",
+          "读取、索引、搜索或预览文件内容",
+          "剪贴板历史、云同步与多人共享",
+          "资源管理器 Shell 扩展",
+          "独立产品、托盘、开机启动项或安装包"
+        ],
+        "surface_profiles": ["light-outlined", "dark-translucent"]
+      }
+    ],
+    "compatibility_launchers": [
+      {
+        "id": "legacy-desktop-organizer",
+        "visibility": "development-or-compatibility-only"
+      },
+      {
+        "id": "legacy-mouse-ring",
+        "visibility": "development-or-compatibility-only"
+      },
+      {
+        "id": "legacy-light-pet",
+        "visibility": "development-or-compatibility-only"
+      },
+      {
+        "id": "legacy-reminder-notes",
+        "visibility": "development-or-compatibility-only"
+      }
+    ]
+  },
+  "visual": {
+    "management_surface": "light-outlined",
+    "overlay_surface": "dark-translucent",
+    "companion_surface": "transparent-companion",
+    "icon_direction": "扁平圆润、深色描边、黑白紫主色，每个图标只保留一个主隐喻",
+    "illustration_direction": "以已提供的紫发 Q 版角色为参考，使用轻量平涂赛璐璐插图，角色只出现在确有帮助的区域",
+    "copy_direction": "concise-functional"
+  },
+  "packaging": {
+    "display_name": "MU Desk",
+    "executable_identity": "MUDesk",
+    "tray_owner": "MU Desk",
+    "startup_identity": "MU Desk",
+    "settings_owner": "MU Desk",
+    "data_location": "%LocalAppData%\\MU Desk",
+    "about_credit": "mujun",
+    "version_policy": "semver",
+    "distribution": "Windows x64 desktop package"
+  },
+  "overrides": [
+    {
+      "rule": "Internal modules use functional names by default.",
+      "reason": "用户批准为题库以外八个子软件统一使用英文短名。",
+      "replacement": "采用 module-naming-implementation-map.json 的完整名称与界面短名。",
+      "gate": "product_definition",
+      "evidence": "2026-09-05 用户：可以，整体修改一下。",
+      "impact": "只修改展示层命名；MU Desk 统一系统身份及数据路径不变。"
+    },
+    {
+      "rule": "Internal modules use understandable functional names and do not acquire separate brands by default.",
+      "reason": "用户将 Mujun Cue 明确定义为 MU Desk 总包内具有独立名称的子软件，以承载一组完整且长期扩展的屏幕讲解能力。",
+      "replacement": "模块使用名称 Mujun Cue；在需要解释功能的入口辅以描述“屏幕演示”，但不建立独立系统包装身份。",
+      "gate": "product_definition",
+      "evidence": "2026-09-05 用户明确说明：Mujun Cue 是子软件的名字，Desk 是总包的名字，不冲突。",
+      "impact": "Mujun Cue 可拥有模块卡片、模块图标和模块窗口标题；托盘、启动、设置、版本、数据根目录及发布仍归 MU Desk。"
+    }
+  ],
+  "guardrails": [
+    "MU Desk 是唯一面向普通用户的入口",
+    "英文子软件名只用于模块展示，不建立独立系统包装",
+    "正式资产与产品代码必须等待对应决策门通过",
+    "兼容启动器不得重新引入独立托盘、开机启动或品牌包装",
+    "动态拾取首版只在用户点击“发送给 Codex”后提交精选关键帧与提示，不自动发送完整录屏",
+    "CISP 题库和错题本均为本地练习能力，不建立独立产品身份",
+    "临时货架只保存用户主动放入项的本地路径和分组元数据，不接触原文件内容或生命周期"
+    ,"桌面伙伴与随记可保留独立工作进程以隔离动画和调度负载，但普通运行必须由 MU Desk 统一托盘、启动和退出"
+  ]
+}

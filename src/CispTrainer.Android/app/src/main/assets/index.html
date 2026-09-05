@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#7650C8">
+    <title>CISP 题库</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-icon">C?</span>
+            <div><h1>CISP 题库</h1><p>普通 CISP · CISE/CISO · 离线版</p></div>
+        </div>
+        <div class="top-actions">
+            <button class="primary" id="exportButton">导出错题给 AI</button>
+            <button id="materialsButton">原版材料</button>
+            <button id="sourceButton">查看题源</button>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="settings panel">
+            <h2>练习设置</h2>
+            <label for="practiceMode">练习入口</label>
+            <select id="practiceMode">
+                <option value="combined">综合题库（907题）</option>
+                <option value="sets">2026 最新八套题</option>
+            </select>
+
+            <div id="setPickerGroup" class="hidden">
+                <label for="setPicker">选择套题（各套独立）</label>
+                <select id="setPicker"></select>
+                <small class="set-note">只练当前这一套，不会混入其他套题。</small>
+            </div>
+
+            <label for="domainPicker">知识类别</label>
+            <select id="domainPicker"><option value="">全部类别</option></select>
+
+            <label for="sessionSize">每组题数（1–<span id="maxQuestionCount">907</span>）</label>
+            <div class="session-size-row">
+                <input id="sessionSize" type="number" min="1" max="907" inputmode="numeric" value="100">
+                <button id="applySessionSize">应用</button>
+            </div>
+
+            <label class="check"><input id="wrongOnly" type="checkbox"> 打开错题本</label>
+            <label class="check"><input id="markedOnly" type="checkbox"> 只看标记题</label>
+            <label class="check"><input id="excludedOnly" type="checkbox"> 管理不再抽取题</label>
+
+            <section class="summary-card">
+                <span>当前题库</span>
+                <strong id="questionCount">--</strong>
+                <small>题目和图片均已离线保存</small>
+            </section>
+            <section class="summary-card accent-card">
+                <span>本机练习记录</span>
+                <div id="attemptedText">已做 0 道</div>
+                <div id="accuracyText">正确率 --</div>
+                <div class="danger" id="wrongCountText">错题本 0 道</div>
+                <div class="accent" id="markedCountText">标记 0 道</div>
+                <div id="excludedCountText">不再抽取 0 道</div>
+            </section>
+        </aside>
+
+        <section class="question panel" id="questionPanel">
+            <div class="question-meta">
+                <span class="pill" id="domainText"></span>
+                <span id="sourceText"></span>
+                <span class="spacer"></span>
+                <button class="compact" id="copyButton">复制题目</button>
+                <button class="compact" id="markButton">☆ 标记本题</button>
+                <span id="positionText"></span>
+            </div>
+            <h2 id="stemText"></h2>
+            <div id="imagePanel"></div>
+            <div class="options" id="optionsPanel"></div>
+            <section class="answer-panel hidden" id="answerPanel">
+                <strong id="answerTitle"></strong>
+                <p id="answerExplanation"></p>
+            </section>
+            <div class="question-footer">
+                <span id="hintText">点 A–D 选择答案；题目文字可长按复制。</span>
+                <div class="footer-actions">
+                    <button id="removeWrongButton" class="hidden">已掌握，移出错题本</button>
+                    <button id="excludeButton" class="hidden">以后不再抽到</button>
+                    <button id="submitButton" class="primary">提交答案</button>
+                    <button id="nextButton" disabled>下一题</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="empty panel hidden" id="emptyPanel">
+            <h2>当前没有题目</h2>
+            <p id="emptyText"></p>
+        </section>
+    </main>
+
+    <footer><span>●</span> 题目、图片与练习进度均保存在本机。</footer>
+
+    <div class="modal hidden" id="materialsModal" role="dialog" aria-modal="true">
+        <div class="modal-card">
+            <div class="modal-head"><h2>原版 PDF 材料</h2><button id="closeMaterials">关闭</button></div>
+            <div class="material-list" id="materialList"></div>
+        </div>
+    </div>
+    <div class="toast hidden" id="toast"></div>
+
+    <script src="questions.js"></script>
+    <script src="question-sets.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

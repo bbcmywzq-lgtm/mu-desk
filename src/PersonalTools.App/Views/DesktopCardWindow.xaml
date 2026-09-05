@@ -1,0 +1,124 @@
+<Window x:Class="PersonalTools.App.Views.DesktopCardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Memo · 桌面随记" Width="286" Height="205" MinWidth="230" MinHeight="58"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False" ResizeMode="CanResizeWithGrip"
+        FontFamily="Microsoft YaHei UI" FontSize="12"
+        MouseEnter="OnCardMouseEnter" MouseLeave="OnCardMouseLeave">
+  <Window.Resources>
+    <Style TargetType="Button">
+      <Setter Property="MinWidth" Value="27" />
+      <Setter Property="MinHeight" Value="25" />
+      <Setter Property="Padding" Value="6,2" />
+      <Setter Property="Foreground" Value="#594D67" />
+      <Setter Property="Background" Value="#F7F2FC" />
+      <Setter Property="BorderBrush" Value="#CDBFDB" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="ButtonBorder" Padding="{TemplateBinding Padding}" CornerRadius="7"
+                    Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="ButtonBorder" Property="Background" Value="#EADFF5" />
+              </Trigger>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="ButtonBorder" Property="Background" Value="#DCCBEF" />
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.4" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="PrimaryCardButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+      <Setter Property="Background" Value="#7650A6" />
+      <Setter Property="BorderBrush" Value="#7650A6" />
+      <Setter Property="Foreground" Value="White" />
+    </Style>
+  </Window.Resources>
+
+  <Border x:Name="CardBorder" Margin="8" Padding="12" CornerRadius="13"
+          Background="#FFF8D9" BorderBrush="#CBBE86" BorderThickness="1">
+    <Border.ContextMenu>
+      <ContextMenu x:Name="CardMenu" FontFamily="Microsoft YaHei UI">
+        <MenuItem x:Name="CompleteMenu" Header="标记完成" Click="OnCompleteClick" />
+        <MenuItem x:Name="SnoozeMenu" Header="10 分钟后提醒" Click="OnSnoozeClick" />
+        <MenuItem Header="编辑提醒与标签…" Click="OnEditClick" />
+        <Separator />
+        <MenuItem Header="颜色">
+          <MenuItem Header="便签黄" Tag="yellow" Click="OnColorMenuClick" />
+          <MenuItem Header="淡紫" Tag="violet" Click="OnColorMenuClick" />
+          <MenuItem Header="薄荷" Tag="mint" Click="OnColorMenuClick" />
+          <MenuItem Header="浅蓝" Tag="blue" Click="OnColorMenuClick" />
+          <MenuItem Header="柔粉" Tag="rose" Click="OnColorMenuClick" />
+        </MenuItem>
+        <MenuItem Header="透明度">
+          <MenuItem Header="100%" Tag="1" Click="OnOpacityMenuClick" />
+          <MenuItem Header="85%" Tag="0.85" Click="OnOpacityMenuClick" />
+          <MenuItem Header="70%" Tag="0.70" Click="OnOpacityMenuClick" />
+        </MenuItem>
+        <MenuItem x:Name="LockMenu" Header="锁定位置" IsCheckable="True" Click="OnLockClick" />
+        <MenuItem x:Name="TopMenu" Header="始终置顶" IsCheckable="True" Click="OnTopClick" />
+        <MenuItem x:Name="CollapseMenu" Header="折叠" Click="OnCollapseMenuClick" />
+        <Separator />
+        <MenuItem Header="在 Memo 中打开" Click="OnEditClick" />
+        <MenuItem Header="从桌面收起" Click="OnUnpinClick" />
+      </ContextMenu>
+    </Border.ContextMenu>
+    <Border.Effect>
+      <DropShadowEffect BlurRadius="15" ShadowDepth="3" Opacity="0.2" />
+    </Border.Effect>
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Grid x:Name="DragHeader" MinHeight="26" MouseLeftButtonDown="OnHeaderMouseDown">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <Ellipse Width="7" Height="7" Margin="0,0,7,0" Fill="#7650A6" />
+          <TextBlock x:Name="DueText" MaxWidth="155" FontSize="11" FontWeight="SemiBold"
+                     Foreground="#665A45" TextTrimming="CharacterEllipsis" />
+        </StackPanel>
+        <StackPanel x:Name="HoverToolbar" Grid.Column="1" Orientation="Horizontal" Visibility="Collapsed">
+          <Button x:Name="CompleteButton" Margin="0,0,5,0" Style="{StaticResource PrimaryCardButton}"
+                  Content="✓" ToolTip="完成" Click="OnCompleteClick" />
+          <Button Content="···" FontWeight="Bold" ToolTip="更多" Click="OnMoreClick" />
+        </StackPanel>
+      </Grid>
+
+      <TextBox x:Name="ContentEditor" Grid.Row="1" Margin="0,7,0,5" Padding="0"
+               AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+               Background="Transparent" BorderThickness="0" Foreground="#302B25"
+               FontFamily="Microsoft YaHei UI" FontSize="15" CaretBrush="#7650A6"
+               TextChanged="OnContentTextChanged" GotKeyboardFocus="OnContentFocus" LostKeyboardFocus="OnContentLostFocus"
+               PreviewKeyDown="OnContentKeyDown" />
+
+      <Grid x:Name="MetadataPanel" Grid.Row="2" MinHeight="20">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="TagsText" VerticalAlignment="Center" FontSize="10.5" Foreground="#7E735F"
+                   TextTrimming="CharacterEllipsis" />
+        <TextBlock x:Name="SaveStateText" Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center"
+                   FontSize="10" Foreground="#8B8192" Text="已保存" />
+      </Grid>
+    </Grid>
+  </Border>
+</Window>

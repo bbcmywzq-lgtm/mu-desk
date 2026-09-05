@@ -1,0 +1,70 @@
+<Window x:Class="EffectCapture.TestApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Clip · 独立测试"
+        Width="680" Height="560" MinWidth="620" MinHeight="520"
+        WindowStartupLocation="CenterScreen" Background="{StaticResource MuCanvasBrush}"
+        FontFamily="Microsoft YaHei UI" FontSize="14">
+    <Grid Margin="34">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Border Width="58" Height="58" CornerRadius="15" Background="{StaticResource MuAccentSoftBrush}"
+                    BorderBrush="{StaticResource MuOutlineBrush}" BorderThickness="1.5">
+                <Image Width="48" Height="48"
+                       Source="/PersonalToolbox;component/Assets/EffectCapture/effect-capture-64.png" />
+            </Border>
+            <StackPanel Grid.Column="1" Margin="16,1,0,0">
+                <TextBlock FontSize="25" FontWeight="SemiBold" Foreground="{StaticResource MuInkBrush}"
+                           Text="Clip · 动态拾取" />
+                <TextBlock Margin="0,5,0,0" Foreground="{StaticResource MuMutedBrush}"
+                           Text="独立测试版 · 当前没有接入 MU Desk" />
+            </StackPanel>
+            <Border Grid.Column="2" Padding="11,6" CornerRadius="13" Background="{StaticResource MuSurfaceBrush}"
+                    BorderBrush="{StaticResource MuLineBrush}" BorderThickness="1" VerticalAlignment="Center">
+                <TextBlock FontSize="12" Foreground="{StaticResource MuAccentBrush}" FontWeight="SemiBold" Text="TEST HOST" />
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="1" Margin="0,28,0,24" Padding="28" Style="{StaticResource MuPanel}">
+            <StackPanel>
+                <TextBlock FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource MuInkBrush}"
+                           Text="框选屏幕上的短动效" />
+                <TextBlock Margin="0,8,0,0" Foreground="{StaticResource MuMutedBrush}" TextWrapping="Wrap" LineHeight="23"
+                           Text="拖出一个区域，录制 2、5 或 7 秒。工具会生成 H.264 MP4、关键帧、接触表和结构化提示；完成后可直接在 Codex 输入框中打开。" />
+
+                <Button x:Name="StartButton" Margin="0,24,0,0" Height="56"
+                        Style="{StaticResource MuPrimaryButton}" FontSize="16"
+                        Content="开始框选录制" Click="Start_OnClick" />
+
+                <Grid Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock FontWeight="SemiBold" Foreground="{StaticResource MuInkBrush}" Text="当前状态" />
+                        <TextBlock x:Name="StatusText" Margin="0,5,12,0" Foreground="{StaticResource MuMutedBrush}"
+                                   TextWrapping="Wrap" Text="准备就绪" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Margin="9,0,0,0" Content="设置" Click="Settings_OnClick" />
+                        <Button Margin="9,0,0,0" Content="打开素材目录" Click="OpenFolder_OnClick" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <TextBlock Grid.Row="2" Foreground="{StaticResource MuMutedBrush}" FontSize="12" TextWrapping="Wrap"
+                   Text="配置和测试素材单独保存到本机 MU Dynamic Capture Test 目录；关闭此窗口即可退出测试器。" />
+    </Grid>
+</Window>

@@ -1,0 +1,74 @@
+<Window x:Class="PersonalToolbox.Views.EffectCaptureSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Clip · 动态拾取 · MU Desk" Icon="{StaticResource MuEffectCaptureIcon}"
+        Width="560" Height="470" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" Background="{StaticResource MuCanvasBrush}" FontFamily="Microsoft YaHei UI">
+    <Window.Resources>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource MuComboBox}" />
+        <Style TargetType="TextBox" BasedOn="{StaticResource MuTextBox}" />
+        <Style TargetType="CheckBox" BasedOn="{StaticResource MuCheckBox}" />
+    </Window.Resources>
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource MuInkBrush}" Text="Clip 设置" />
+            <TextBlock Margin="0,6,0,0" Foreground="{StaticResource MuMutedBrush}" Text="只保存必要参数；没有常驻录制或后台编码进程。" />
+        </StackPanel>
+        <Border Grid.Row="1" Margin="0,22" Padding="20" Background="{StaticResource MuSurfaceBrush}"
+                BorderBrush="{StaticResource MuOutlineBrush}" BorderThickness="1.2" CornerRadius="14">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock FontWeight="SemiBold" Text="默认时长" />
+                        <TextBlock Margin="0,4,0,0" Foreground="{StaticResource MuMutedBrush}" Text="每次选区后仍可临时修改。" />
+                    </StackPanel>
+                    <ComboBox x:Name="DurationBox" Grid.Column="1" Width="90" SelectedValuePath="Tag">
+                        <ComboBoxItem Content="2 秒" Tag="2" />
+                        <ComboBoxItem Content="5 秒" Tag="5" />
+                        <ComboBoxItem Content="7 秒" Tag="7" />
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock FontWeight="SemiBold" Text="录制前倒计时" />
+                        <TextBlock Margin="0,4,0,0" Foreground="{StaticResource MuMutedBrush}" Text="给你留出重新触发网页动效的时间。" />
+                    </StackPanel>
+                    <CheckBox x:Name="CountdownBox" Grid.Column="1" VerticalAlignment="Center" Content="启用" />
+                </Grid>
+                <StackPanel Grid.Row="2" Margin="0,20,0,0">
+                    <TextBlock FontWeight="SemiBold" Text="素材目录" />
+                    <TextBox x:Name="OutputRootBox" Margin="0,7,0,0" Padding="9" />
+                </StackPanel>
+                <Grid Grid.Row="3" Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock FontWeight="SemiBold" Text="全局快捷键" />
+                        <TextBlock Margin="0,4,0,0" Foreground="{StaticResource MuMutedBrush}" Text="默认 Ctrl + Alt + R；可关闭或改为 Ctrl + Shift + R。" />
+                    </StackPanel>
+                    <ComboBox x:Name="HotkeyBox" Grid.Column="1" Width="138" SelectedValuePath="Tag">
+                        <ComboBoxItem Content="未设置" Tag="" />
+                        <ComboBoxItem Content="Ctrl + Alt + R" Tag="Ctrl+Alt+R" />
+                        <ComboBoxItem Content="Ctrl + Shift + R" Tag="Ctrl+Shift+R" />
+                    </ComboBox>
+                </Grid>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Style="{StaticResource MuSecondaryButton}" Content="取消" Click="Cancel_OnClick" />
+            <Button Margin="10,0,0,0" Style="{StaticResource MuPrimaryButton}" Content="保存" Click="Save_OnClick" />
+        </StackPanel>
+    </Grid>
+</Window>

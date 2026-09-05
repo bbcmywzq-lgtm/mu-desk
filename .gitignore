@@ -1,0 +1,39 @@
+[Bb]in/
+[Oo]bj/
+.vs/
+.idea/
+work/
+artifacts/
+*.user
+*.suo
+*.log
+
+# Local tooling, scratch work and unrelated third-party checkouts
+.codex-research/
+tmp/
+VPet/
+VPet-original/
+pet-production/
+pet-prototype/
+__pycache__/
+*.pyc
+node_modules/
+.gradle/
+**/build/
+local.properties
+
+# Credentials, local overrides and signing material
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.pem
+*.key
+*.jks
+*.keystore
+secrets.json
+
+# Rejected cursor artwork (accepted and shipped variants remain tracked)
+assets/cursors/maple-link/bold/
+assets/cursors/maple-link/generated-hand-bold.png

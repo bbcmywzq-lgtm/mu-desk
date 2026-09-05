@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "id": "violet-alex-benchmark",
+  "displayName": "紫发阿历克斯",
+  "canvas": {
+    "width": 1000,
+    "height": 1000,
+    "anchorX": 500,
+    "anchorY": 945
+  },
+  "display": {
+    "defaultSize": 130,
+    "minimumSize": 130,
+    "maximumSize": 400,
+    "visibleBounds": {
+      "left": 0.25,
+      "top": 0.055,
+      "right": 0.75,
+      "bottom": 0.95
+    }
+  },
+  "hitRegions": [
+    {
+      "id": "cheek",
+      "x": 355,
+      "y": 300,
+      "width": 290,
+      "height": 145
+    },
+    {
+      "id": "head",
+      "x": 300,
+      "y": 90,
+      "width": 400,
+      "height": 360
+    },
+    {
+      "id": "body",
+      "x": 300,
+      "y": 450,
+      "width": 400,
+      "height": 430
+    }
+  ],
+  "actions": [
+    {
+      "id": "idle",
+      "phases": [
+        {
+          "kind": "loop",
+          "folder": "actions/idle/loop"
+        }
+      ]
+    },
+    {
+      "id": "walk-left",
+      "phases": [
+        {
+          "kind": "start",
+          "folder": "actions/walk-left/start"
+        },
+        {
+          "kind": "loop",
+          "folder": "actions/walk-left/loop"
+        },
+        {
+          "kind": "end",
+          "folder": "actions/walk-left/end"
+        }
+      ]
+    },
+    {
+      "id": "walk-right",
+      "phases": [
+        {
+          "kind": "start",
+          "folder": "actions/walk-right/start"
+        },
+        {
+          "kind": "loop",
+          "folder": "actions/walk-right/loop"
+        },
+        {
+          "kind": "end",
+          "folder": "actions/walk-right/end"
+        }
+      ]
+    },
+    {
+      "id": "touch-head",
+      "phases": [
+        {
+          "kind": "start",
+          "folder": "actions/touch-head/start"
+        },
+        {
+          "kind": "loop",
+          "folder": "actions/touch-head/loop"
+        },
+        {
+          "kind": "end",
+          "folder": "actions/touch-head/end"
+        }
+      ]
+    },
+    {
+      "id": "idle-random",
+      "phases": [{ "kind": "single", "folder": "actions/idle-random/single" }]
+    },
+    {
+      "id": "raise",
+      "phases": [{ "kind": "loop", "folder": "actions/raise/loop" }]
+    },
+    {
+      "id": "fall-land",
+      "phases": [
+        { "kind": "start", "folder": "actions/fall-land/start" },
+        { "kind": "loop", "folder": "actions/fall-land/loop" },
+        { "kind": "end", "folder": "actions/fall-land/end" }
+      ]
+    },
+    {
+      "id": "touch-body",
+      "phases": [{ "kind": "single", "folder": "actions/touch-body/single" }]
+    },
+    {
+      "id": "pinch",
+      "phases": [{ "kind": "single", "folder": "actions/pinch/single" }]
+    },
+    {
+      "id": "startup",
+      "phases": [{ "kind": "single", "folder": "actions/startup/single" }]
+    },
+    {
+      "id": "shutdown",
+      "phases": [{ "kind": "single", "folder": "actions/shutdown/single" }]
+    },
+    {
+      "id": "sleep",
+      "phases": [
+        { "kind": "start", "folder": "actions/sleep/start" },
+        { "kind": "loop", "folder": "actions/sleep/loop" },
+        { "kind": "end", "folder": "actions/sleep/end" }
+      ]
+    },
+    {
+      "id": "think",
+      "phases": [{ "kind": "single", "folder": "actions/think/single" }]
+    },
+    {
+      "id": "say",
+      "phases": [{ "kind": "single", "folder": "actions/say/single" }]
+    },
+    {
+      "id": "happy",
+      "phases": [{ "kind": "single", "folder": "actions/happy/single" }]
+    },
+    {
+      "id": "sad",
+      "phases": [{ "kind": "single", "folder": "actions/sad/single" }]
+    },
+    {
+      "id": "surprised",
+      "phases": [{ "kind": "single", "folder": "actions/surprised/single" }]
+    },
+    {
+      "id": "focus",
+      "phases": [{ "kind": "loop", "folder": "actions/focus/loop" }]
+    },
+    {
+      "id": "wave",
+      "phases": [{ "kind": "single", "folder": "actions/wave/single" }]
+    },
+    {
+      "id": "reminder-alert",
+      "phases": [{ "kind": "single", "folder": "actions/reminder-alert/single" }]
+    },
+    {
+      "id": "note-write",
+      "phases": [{ "kind": "single", "folder": "actions/note-write/single" }]
+    },
+    {
+      "id": "edge-climb-left",
+      "phases": [{ "kind": "loop", "folder": "actions/edge-climb-left/loop" }]
+    },
+    {
+      "id": "edge-climb-right",
+      "phases": [{ "kind": "loop", "folder": "actions/edge-climb-right/loop" }]
+    },
+    {
+      "id": "edge-top-left",
+      "phases": [{ "kind": "loop", "folder": "actions/edge-top-left/loop" }]
+    },
+    {
+      "id": "edge-top-right",
+      "phases": [{ "kind": "loop", "folder": "actions/edge-top-right/loop" }]
+    },
+    {
+      "id": "edge-hold-left",
+      "phases": [{ "kind": "loop", "folder": "actions/edge-hold-left/loop" }]
+    },
+    {
+      "id": "edge-hold-right",
+      "phases": [{ "kind": "loop", "folder": "actions/edge-hold-right/loop" }]
+    },
+    {
+      "id": "edge-hold-top-left",
+      "phases": [{ "kind": "loop", "folder": "actions/edge-hold-top-left/loop" }]
+    },
+    {
+      "id": "edge-hold-top-right",
+      "phases": [{ "kind": "loop", "folder": "actions/edge-hold-top-right/loop" }]
+    },
+    {
+      "id": "observe-cursor",
+      "phases": [{ "kind": "single", "folder": "actions/observe-cursor/single" }]
+    },
+    {
+      "id": "head-rub",
+      "phases": [{ "kind": "single", "folder": "actions/head-rub/single" }]
+    },
+    {
+      "id": "cheek-poke",
+      "phases": [{ "kind": "single", "folder": "actions/cheek-poke/single" }]
+    },
+    {
+      "id": "annoyed-dodge",
+      "phases": [{ "kind": "single", "folder": "actions/annoyed-dodge/single" }]
+    },
+    {
+      "id": "stretch",
+      "phases": [{ "kind": "single", "folder": "actions/stretch/single" }]
+    },
+    {
+      "id": "hair-fix",
+      "phases": [{ "kind": "single", "folder": "actions/hair-fix/single" }]
+    },
+    {
+      "id": "yawn",
+      "phases": [{ "kind": "single", "folder": "actions/yawn/single" }]
+    },
+    {
+      "id": "sit-rest",
+      "phases": [
+        { "kind": "start", "folder": "actions/sit-rest/start" },
+        { "kind": "loop", "folder": "actions/sit-rest/loop" },
+        { "kind": "end", "folder": "actions/sit-rest/end" }
+      ]
+    }
+  ]
+}

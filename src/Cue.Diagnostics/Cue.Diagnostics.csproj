@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup><ProjectReference Include="..\Toolbox.App\Toolbox.App.csproj" /></ItemGroup>
+  <ItemGroup><Resource Include="..\Toolbox.App\Assets\App\mu-desk.ico" Link="Assets\App\mu-desk.ico" /></ItemGroup>
+  <ItemGroup><Resource Include="..\LightPet.App\Assets\LightPet-icon-source.png" Link="Assets\Pet\lightpet.png" /></ItemGroup>
+</Project>

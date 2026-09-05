@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>CISP-Trainer</AssemblyName>
+    <RootNamespace>CispTrainer</RootNamespace>
+    <PlatformTarget>x64</PlatformTarget>
+    <ApplicationIcon>..\Toolbox.App\Assets\App\mu-desk.ico</ApplicationIcon>
+    <Version>1.3.1</Version>
+    <AssemblyTitle>CISP 刷题</AssemblyTitle>
+    <Product>CISP 刷题</Product>
+    <Description>普通 CISP（CISE/CISO）离线刷题与错题本</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Toolbox.Core\Toolbox.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="..\Toolbox.App\Styles\MuProductTheme.xaml" Link="Styles\MuProductTheme.xaml" />
+    <Page Include="..\Toolbox.App\Views\CispQuestionBankWindow.xaml" Link="Views\CispQuestionBankWindow.xaml" />
+    <Compile Include="..\Toolbox.App\Views\CispQuestionBankWindow.xaml.cs"
+             Link="Views\CispQuestionBankWindow.xaml.cs"
+             DependentUpon="CispQuestionBankWindow.xaml" />
+    <Resource Include="..\Toolbox.App\Assets\App\mu-desk.ico" Link="Assets\App\mu-desk.ico" />
+    <Content Include="..\Toolbox.App\Assets\Cisp\**\*"
+             Link="Assets\Cisp\%(RecursiveDir)%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="使用说明.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

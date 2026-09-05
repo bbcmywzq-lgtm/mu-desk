@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/PersonalTools.Core/PersonalTools.Core.csproj" />
+  <Project Path="src/PersonalTools.App/PersonalTools.App.csproj" />
+  <Project Path="src/PersonalTools.Tests/PersonalTools.Tests.csproj" />
+</Solution>
