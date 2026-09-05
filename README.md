@@ -1,73 +1,81 @@
 # MU Desk
 
-Windows 桌面工具箱，包含 Cue 屏幕讲解、Orbit 快捷轮盘、Clip 动态拾取、Tip 光标装扮、Grid 桌面整理、Drop 文件暂存、Memo 随记提醒、Pal 桌面伙伴和 CISP 题库。
+MU Desk 是一个 Windows 桌面工具箱，用一个入口承载多个日常小工具。它不是单独的 Grid 文档，而是整个桌面工具包的源码仓库。
 
-总包介绍、功能与构建入口见 [TOOLBOX_README.md](TOOLBOX_README.md)。源码构建需要 Windows x64 和 `global.json` 指定的 .NET 10 SDK。现有构建脚本从 `work/dotnet-sdk/dotnet.exe` 调用 SDK；该本机工具目录不上传。使用已安装 SDK 可运行 `dotnet build PersonalToolbox.slnx -c Release`。
+当前工具箱包含屏幕讲解、快捷轮盘、短录屏、光标装扮、桌面整理、文件暂存、随记提醒、桌面伙伴和 CISP 题库。总包名称是 `MU Desk`；模块在界面里使用短英文名，完整称呼保留 `Mujun` 前缀。
 
-本仓库保存源码及所需运行素材，不包含本机配置、账号信息、SDK、编译缓存、发布包和素材试验目录。内含第三方或参考素材不代表授予重新分发许可；对外公开前需另行核对授权。
+## 模块
 
-## Mujun Grid · 桌面整理
+| 模块 | 完整名称 | 功能 |
+| --- | --- | --- |
+| Cue | Mujun Cue | 屏幕聚焦、鼠标指示、聚光、局部放大、标注和截图。 |
+| Orbit | Mujun Orbit | 鼠标快捷轮盘，用于快速触发常用操作。 |
+| Clip | Mujun Clip | 短录屏与精选关键帧捕获。 |
+| Tip | Mujun Tip | 本机光标皮肤浏览与应用。 |
+| Grid | Mujun Grid | 桌面分区、智能文件夹、整理规则、搜索、备份与恢复。 |
+| Drop | Mujun Drop | 文件临时暂存，只保存路径引用，不移动原文件。 |
+| Memo | Mujun Memo | 便签、提醒与桌面卡片，由 ReminderNotes 工作进程托管。 |
+| Pal | Mujun Pal | 桌面伙伴，由 LightPet 工作进程托管。 |
+| CISP | CISP 题库 | 题目练习与错题复习。 |
 
-Grid（原栖格，工程名 DesktopOrganizer）是 MU Desk 内本地优先的 Windows 桌面整理工具。它把真实桌面文件映射到可移动、可缩放、可折叠的毛玻璃分区中，让桌面各得其所。普通分组整理只修改本机元数据，不会移动、重命名或删除原文件。总包及其他模块见 `TOOLBOX_README.md`；改名不改变原有数据路径和备份格式。
+## 总包特性
 
-## 主要功能
+- 一个主窗口和一个通知区域图标管理全部工具。
+- 开机启动项统一为 `PersonalToolbox`。
+- 关闭主窗口后收进托盘，双击托盘图标或再次运行工具箱可重新打开。
+- 轻量模块直接运行在宿主进程中；需要独立后台职责的模块通过工作进程接入。
+- MU 命名调整不会改变已有模块的数据目录、配置键、管道和兼容入口。
+- Cue 的放大镜采用 GPU 实时捕获与合成，临时聚焦使用连续镜头模型处理缩放和复原。
 
-- 桌面级常驻：正常模式嵌入 Windows 桌面，通知区域图标可随时唤回、重置或退出；重复启动会自动唤回已有实例。
-- 任务栏避让：桌面工作区严格使用 Windows 可用区域，底部或侧边任务栏始终位于栖格之上，分区不会覆盖系统菜单栏。
-- 多分区整理：新建、重命名、移动、缩放、折叠和删除分区；每个分区可用图钉单独固定；允许删除最后一个分区进入空布局，之后新建的首个分区会自动承接未归类项目。
-- 紧凑折叠态：分区收起后变为干净的桌面标签，只保留标题、数量与展开入口；拖动边界按胶囊的真实可见尺寸计算，展开时再自动回到安全区域。
-- 视域聚焦：点击标题栏的取景框图标或双击分区标题，即可暂时淡出其他分区并只搜索当前区域；按 `Esc` 或点击顶部“视域”提示退出。
-- 智能文件夹分区：绑定本机固定磁盘中的一个文件夹，可选递归子目录，并按 CAD、图片、文档预设或多个自定义扩展名筛选；结果以文件名、相对路径、修改时间和大小组成的紧凑列表显示。
-- 分区显示模式：每个分区可独立选择“跟随类型”“图标视图”或“列表视图”；智能分区筛选条提供一键切换，选择会随布局持久保存。
-- 文件夹内导航：智能分区会显示可进入的子文件夹，双击或按 `Enter` 可逐级深入；筛选条提供“上一级”和“一键回主目录”，路径以面包屑形式显示，拖入文件会落到当前目录。
-- 本地实时视图：智能分区异步扫描且不会阻塞桌面；来源目录变化后自动刷新，图片显示缩略图，目录失效时保留配置并提示重新绑定。
-- 安全文件操作：支持多选、重命名、跨分区移动和移入 Windows 回收站；跨类型拖放前首次明确提示真实目标路径，同名文件自动保留两份，当前会话可用 `Ctrl+Z` 撤销移动或重命名。
-- 拖放与撤销：项目可在分区间拖放，支持工具栏按钮和 `Ctrl+Z` 撤销上一次整理操作。
-- 实时桌面同步：监视当前用户桌面和公共桌面；新增、删除及重命名后自动刷新，并保留重命名项目的归属。
-- 快速查找：`Ctrl+F` 搜索所有分区，进入视域后自动限定当前分区；`Esc` 优先退出视域，再清空搜索；无匹配结果时显示明确空状态。
-- 文件操作：双击或按 `Enter` 使用 Windows 默认程序打开；右键可打开、定位到资源管理器或移回收件箱。
-- 自动规则：按扩展名或名称关键字整理，可启停并指定目标分区；手动拖放的归属始终优先。
-- 本地备份：导出和导入 `.desktoporganizer` 备份，导入前自动建立恢复点。
-- 可靠持久化：布局原子写入并保留上一份备份；损坏时隔离异常文件并自动恢复；诊断日志自动轮转。
-- 安全设置：开机启动和隐藏 Windows 原生桌面图标均为用户主动选择；原生图标隐藏状态带异常退出恢复标记。
+## 文档
 
-## 隐私与联网
-
-核心功能不需要网络连接。应用只读取桌面目录和用户主动选择的本机文件夹，数据保存在 `%LocalAppData%\DesktopOrganizer`，不会上传文件或布局信息，也不包含在线账户或云端依赖。
-
-本地数据包括：
-
-- `layout.json` / `layout.backup.json`：分区、规则和项目归属；
-- `settings.json`：应用设置；
-- `app.log` / `app.previous.log`：本地诊断日志；
-- `*.desktoporganizer`：用户主动导出的备份。
+- [TOOLBOX_README.md](TOOLBOX_README.md)：工具箱完整说明、模块约定和 Cue 细节。
+- [GRID_README.md](GRID_README.md)：Mujun Grid 的完整桌面整理文档。
+- [MOUSE_RING_README.md](MOUSE_RING_README.md)：Orbit / MouseRing 的兼容说明。
+- [REMINDER_NOTES_README.md](REMINDER_NOTES_README.md)：Memo 工作进程说明。
+- [LIGHTPET_README.md](LIGHTPET_README.md)：Pal 工作进程说明。
 
 ## 系统要求
 
-- Windows 10 2004（Build 19041）或更高版本，x64；
-- 源码构建使用 .NET 10 SDK；发布包为自包含单文件，无需预装 .NET。
+- Windows 10 2004（Build 19041）或更高版本。
+- Windows x64。
+- 源码构建需要与 `global.json` 匹配的 .NET 10 SDK。
+
+仓库不会上传本机 SDK 目录 `work/dotnet-sdk`。当前开发脚本会优先使用这一路径；如果机器已经全局安装 .NET 10 SDK，也可以直接运行：
+
+```powershell
+dotnet build PersonalToolbox.slnx -c Release
+```
 
 ## 构建与运行
 
-```powershell
-.\build.ps1
-.\run.ps1
-```
-
-开发期间可使用普通窗口预览，不嵌入桌面，也不会隐藏 Windows 原生图标：
+在带有 `work/dotnet-sdk/dotnet.exe` 的开发机上：
 
 ```powershell
-.\work\dotnet-sdk\dotnet.exe run --project .\src\DesktopOrganizer.App -- --windowed-preview
+.\build-toolbox.ps1
+.\run-toolbox.ps1
 ```
 
-生成自包含的 Windows x64 单文件发布包与 SHA-256 校验文件：
+生成 Windows x64 工具箱发布目录：
 
 ```powershell
-.\publish.ps1
+.\publish-toolbox.ps1
 ```
 
-输出位于 `artifacts\DesktopOrganizer-win-x64.zip`。解压后运行 `DesktopOrganizer.exe`；窗口关闭后应用仍留在通知区域，双击通知区域图标或再次运行程序可唤回窗口，应通过通知区域菜单的“退出”完全退出。
+主程序输出位置：
 
-## 验证
+```text
+artifacts\PersonalToolbox-win-x64\PersonalToolbox.exe
+```
 
-`build.ps1` 会依次还原依赖、执行 Release 构建并运行离线验证套件。验证覆盖布局修复、规则优先级、分区删除、重命名归属、撤销深拷贝、旧版迁移、损坏恢复、设置和备份往返，以及桌面目录新增与重命名监视。
+主解决方案：
+
+```text
+PersonalToolbox.slnx
+```
+
+## 仓库说明
+
+本仓库保存源码和必要运行素材，不包含本机配置、账号信息、SDK、编译缓存、发布包和素材试验目录。
+
+仓库内的第三方或参考素材不代表已经获得公开再分发许可。对外公开发布前，需要单独核对素材授权；当前仓库应按私有源码仓库处理。
