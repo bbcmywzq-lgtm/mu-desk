@@ -20,6 +20,9 @@ public partial class App : System.Windows.Application
     private PersonalToolsTrayIconService? _tray;
     private IEntryProvider? _entries;
     private DesktopCardManager? _desktopCards;
+    private WorkbenchClient? _workbench;
+    private WorkbenchEntryProvider? _workbenchEntries;
+    private System.Windows.Threading.DispatcherTimer? _workbenchTimer;
     private bool _hostedByToolbox;
     private readonly Queue<EntryItem> _alertQueue = new();
     private ReminderAlertWindow? _activeAlert;
@@ -46,8 +49,37 @@ public partial class App : System.Windows.Application
             MigrateLegacyData(dataRoot);
             var dataDirectory = Path.Combine(dataRoot, "data");
             Directory.CreateDirectory(dataDirectory);
-            _entries = new LocalJsonEntryProvider(Path.Combine(dataDirectory, "entries.json"));
-            await EntryMigrationService.MigrateAsync(dataDirectory, _entries);
+            ArchiveLegacyEntries(dataDirectory);
+            _workbench = new WorkbenchClient(dataDirectory);
+            await _workbench.LoadAsync();
+            _workbenchEntries = new WorkbenchEntryProvider(
+                _workbench,
+                Path.Combine(dataDirectory, "workbench-cache.json"));
+            _entries = _workbenchEntries;
+            try
+            {
+                await _workbenchEntries.SynchronizeAsync();
+            }
+            catch
+            {
+                // 离线启动：先用本地镜像，稍后自动补同步
+            }
+            _workbenchTimer = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromMinutes(1),
+            };
+            _workbenchTimer.Tick += async (_, _) =>
+            {
+                try
+                {
+                    await _workbenchEntries.SynchronizeAsync();
+                }
+                catch
+                {
+                    // 网络不可用时静默，待发队列保留
+                }
+            };
+            _workbenchTimer.Start();
             _desktopCards = new DesktopCardManager(_entries);
 
             _window = new QuickToolsWindow(_entries, _desktopCards);
@@ -367,6 +399,22 @@ public partial class App : System.Windows.Application
     {
         var value = OptionValue(args, option);
         return string.Equals(value, "--at", StringComparison.OrdinalIgnoreCase) ? null : value;
+    }
+
+    /// <summary>
+    /// 旧本地数据按需求清空：改名留档后不再被程序读取，记录一律以工作台为准。
+    /// </summary>
+    private static void ArchiveLegacyEntries(string dataDirectory)
+    {
+        var legacy = Path.Combine(dataDirectory, "entries.json");
+        if (!File.Exists(legacy))
+        {
+            return;
+        }
+        var backup = Path.Combine(
+            dataDirectory,
+            $"entries.json.bak-{DateTime.Now:yyyyMMdd-HHmmss}");
+        File.Move(legacy, backup);
     }
 
     private static string GetDataRoot()
