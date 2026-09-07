@@ -92,6 +92,7 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
     private readonly WorkbenchClient _client;
     private readonly string _cachePath;
     private WorkbenchCache _cache = new();
+    private bool _cacheLoaded;
     private readonly object _gate = new();
 
     public WorkbenchEntryProvider(
@@ -115,6 +116,7 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
                 JsonSerializer.Deserialize<WorkbenchCache>(json, JsonOptions)
                 ?? new WorkbenchCache();
         }
+        _cacheLoaded = true;
     }
 
     private async Task SaveCacheAsync()
@@ -123,14 +125,18 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
         await File.WriteAllTextAsync(_cachePath, json);
     }
 
-    /// <summary>从工作台拉全量快照并覆盖镜像；待发队列由 WorkbenchClient 负责。</summary>
+    /// <summary>从工作台拉全量快照并合并进镜像；本地未同步条目保留，不会覆盖。</summary>
+    /// <summary>从工作台拉全量快照并合并进镜像；本地未同步条目保留，不会被覆盖。</summary>
     public async Task RefreshAsync(CancellationToken cancellationToken = default)
     {
         var snapshot = await _client.FetchSnapshotAsync(cancellationToken);
+        List<WorkbenchCacheEntry> locals;
+        lock (_gate)
+        {
+            locals = _cache.Entries.ToList();
+        }
         var pendingIds = new HashSet<string>(
-            _cache.Entries
-                .Where(entry => entry.PendingSync)
-                .Select(entry => entry.Id));
+            locals.Where(entry => entry.PendingSync).Select(entry => entry.Id));
         lock (_gate)
         {
             var reminders = snapshot.Reminders
@@ -153,15 +159,17 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
                 .ToDictionary(
                     group => group.Key,
                     group => group.Last(rule => !rule.deleted));
-            _cache.Entries = snapshot.Entries
+            var previousById = locals
+                .GroupBy(entry => entry.Id)
+                .ToDictionary(group => group.Key, group => group.Last());
+            var merged = snapshot.Entries
                 .Select(element => element.Deserialize<WorkbenchCacheEntry>(JsonOptions))
                 .Where(entry => entry is not null)
                 .Cast<WorkbenchCacheEntry>()
                 .Select(entry =>
                 {
                     entry.PendingSync = pendingIds.Contains(entry.Id);
-                    if (_cache.Entries.FirstOrDefault(old => old.Id == entry.Id)
-                        is { } previous)
+                    if (previousById.TryGetValue(entry.Id, out var previous))
                     {
                         entry.DesktopCard = previous.DesktopCard;
                         entry.LastTriggeredAt = previous.LastTriggeredAt;
@@ -179,19 +187,63 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
                     return entry;
                 })
                 .ToList();
+            var serverIds = new HashSet<string>(merged.Select(entry => entry.Id));
+            foreach (var local in locals.Where(entry => entry.PendingSync))
+            {
+                if (serverIds.Contains(local.Id))
+                {
+                    continue;
+                }
+                if (previousById.TryGetValue(local.Id, out var localPrevious))
+                {
+                    local.DesktopCard = localPrevious.DesktopCard;
+                    local.LastTriggeredAt = localPrevious.LastTriggeredAt;
+                }
+                merged.Add(local);
+            }
+            _cache.Entries = merged;
         }
         await SaveCacheAsync();
         CacheChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    /// <summary>冲刷离线队列并拉取最新数据。</summary>
+    /// <summary>冲刷离线队列、重发未同步记录并拉取最新数据。</summary>
     public async Task SynchronizeAsync(CancellationToken cancellationToken = default)
     {
-        await _client.FlushOutboxAsync(cancellationToken);
-        if (_client.IsConfigured)
+        if (!_cacheLoaded)
         {
-            await RefreshAsync(cancellationToken);
+            await LoadCacheAsync();
         }
+        var flushed = await _client.FlushOutboxAsync(cancellationToken);
+        if (flushed < 0)
+        {
+            return;
+        }
+        List<WorkbenchCacheEntry> pending;
+        lock (_gate)
+        {
+            pending = _cache.Entries.Where(entry => entry.PendingSync).ToList();
+        }
+        var recovered = false;
+        foreach (var entry in pending)
+        {
+            if (await EnqueueOrSendAsync(
+                _client.NextOperationId(),
+                "create",
+                entry.Id,
+                EntryCommand(entry.Id),
+                null,
+                new { }))
+            {
+                entry.PendingSync = false;
+                recovered = true;
+            }
+        }
+        if (recovered)
+        {
+            await SaveCacheAsync();
+        }
+        await RefreshAsync(cancellationToken);
     }
 
     private static string? ToIso(string? value)
@@ -288,6 +340,7 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
         var entry = _cache.Entries.First(item => item.Id == id);
         return JsonSerializer.SerializeToElement(new
         {
+            id = entry.Id,
             kind = entry.Kind,
             title = entry.Title,
             notes = entry.Notes,
@@ -303,7 +356,7 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
         }, JsonOptions);
     }
 
-    private async Task EnqueueOrSendAsync(
+    private async Task<bool> EnqueueOrSendAsync(
         string operationId,
         string action,
         string entityId,
@@ -340,11 +393,15 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
         try
         {
             await _client.SendAsync(new[] { command });
+            return true;
         }
         catch (Exception exception)
-            when (exception is HttpRequestException or TaskCanceledException)
+            when (exception is HttpRequestException
+                or TaskCanceledException
+                or UnauthorizedAccessException)
         {
             await _client.EnqueueAsync(command);
+            return false;
         }
     }
 
@@ -375,14 +432,17 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
             _cache.Entries.Insert(0, entry);
         }
         await SaveCacheAsync();
-        await EnqueueOrSendAsync(
+        var delivered = await EnqueueOrSendAsync(
             _client.NextOperationId(),
             "create",
             entry.Id,
             EntryCommand(entry.Id),
             null,
             new { });
-        entry.PendingSync = false;
+        if (delivered)
+        {
+            entry.PendingSync = false;
+        }
         await SaveCacheAsync();
         CacheChanged?.Invoke(this, EventArgs.Empty);
         cancellationToken.ThrowIfCancellationRequested();
@@ -482,9 +542,9 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
             _client.NextOperationId(),
             "update",
             id,
-            EntryCommand(id),
             null,
-            new { });
+            null,
+            new { patch = EntryCommand(id) });
         CacheChanged?.Invoke(this, EventArgs.Empty);
         return Present(entry);
     }
@@ -515,9 +575,9 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
             _client.NextOperationId(),
             "update",
             id,
-            EntryCommand(id),
             null,
-            new { });
+            null,
+            new { patch = EntryCommand(id) });
         CacheChanged?.Invoke(this, EventArgs.Empty);
         return Present(entry);
     }
