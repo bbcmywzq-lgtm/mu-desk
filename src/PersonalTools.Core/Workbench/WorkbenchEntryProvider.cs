@@ -413,7 +413,7 @@ public sealed class WorkbenchEntryProvider : IEntryProvider
         var entry = new WorkbenchCacheEntry
         {
             Id = Guid.NewGuid().ToString(),
-            Kind = command.DueAt is null ? "note" : "task",
+            Kind = "task",
             Title = title,
             Notes = notes,
             Status = "todo",
